@@ -1,0 +1,27 @@
+Offertenwerk — Inhalt dieses Archivs
+====================================
+
+WICHTIG: Der Ordner roh/ mit den Originalofferten und die Datei
+anonymisation_mapping.json sind NICHT enthalten. Beide enthalten
+echte Klientendaten und gehoeren nicht in die Arbeit.
+
+Was drin ist
+------------
+app.html                 Formular-Werkzeug (Stufe 1), per Doppelklick zu oeffnen
+BAUPROTOKOLL.md/.docx    Entscheidungen und Begruendungen
+rag-system/              Messaufbau (Stufe 2)
+  corpus/                14 anonymisierte Offerten
+  measurements/          Rohdaten, Berichte, Abbildungen
+  *.py                   Quellcode
+
+Loslegen
+--------
+  cd rag-system
+  python3 rag.py check                 Voraussetzungen pruefen
+  python3 rag.py ask "deine Frage"     Wissensbasis befragen
+  python3 run_grid.py                  Messgitter (ca. 100 Sekunden)
+  python3 build_grid_report.py         Bericht und Abbildungen
+
+Voraussetzungen: Python 3.9+, Ollama mit nomic-embed-text.
+Fuer formulierte Antworten zusaetzlich: pip3 install anthropic
+und ANTHROPIC_API_KEY setzen.

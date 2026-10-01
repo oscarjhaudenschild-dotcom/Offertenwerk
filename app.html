@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Offertenwerk</title>
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --ink-900:#0E1216;
+  --ink-860:#11161D;
+  --ink-820:#151B23;
+  --ink-780:#1A212B;
+  --ink-700:#212934;
+  --ink-620:#2C3644;
+  --ink-500:#495667;
+  --ink-380:#6C7787;
+  --ink-260:#98A2AF;
+  --chalk:#E4E8ED;
+
+  --paper:#F1F0EC;
+  --paper-2:#E4E2DA;
+  --paper-ink:#15181B;
+  --paper-mid:#5A5C58;
+
+  --verd:#4F9480;
+  --verd-lo:#2C5B4E;
+  --verd-glow:rgba(79,148,128,.16);
+
+  --f-display:"Iowan Old Style","Charter","Palatino Linotype",Palatino,Georgia,serif;
+  --f-ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-mono:"SF Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+
+  --rule:1px solid var(--ink-700);
+  --gut:clamp(20px,4vw,64px);
+  --ease:cubic-bezier(.16,.84,.3,1);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--ink-900);
+  color:var(--chalk);
+  font-family:var(--f-ui);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    transparent 0 31px,
+    rgba(228,232,237,.028) 31px 32px
+  );
+  pointer-events:none; z-index:0;
+}
+
+h1,h2,h3,p,figure{margin:0}
+a{color:inherit}
+
+.shell{max-width:1440px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.topbar{
+  position:sticky; top:0; z-index:40;
+  background:rgba(14,18,22,.82);
+  backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:var(--rule);
+}
+.topbar .shell{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{font-family:var(--f-display);font-size:19px;letter-spacing:.01em}
+.brand em{font-style:normal;color:var(--verd)}
+
+/* ============================================================
+   TOOL
+   ============================================================ */
+.tool{padding:clamp(40px,6vh,64px) 0 0}
+
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(26px,4vw,64px);align-items:start;padding-bottom:clamp(56px,8vh,96px)}
+@media (max-width:1080px){.tool-grid{grid-template-columns:1fr}}
+
+/* form */
+.step{border-top:var(--rule);padding:26px 0}
+.step:last-of-type{border-bottom:var(--rule)}
+.step-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.step-n{font-family:var(--f-mono);font-size:11px;color:var(--verd);letter-spacing:.1em;padding-top:2px}
+.step-t{font-family:var(--f-display);font-size:20px;font-weight:400}
+.step-q{font-size:13px;color:var(--ink-380);margin-top:3px}
+
+.field{margin-bottom:14px}
+.field > label{
+  display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ink-380);margin-bottom:6px;
+}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:560px){.row2,.row3{grid-template-columns:1fr}}
+
+input[type=text],input[type=number],input[type=date],select,textarea{
+  width:100%;padding:11px 13px;
+  background:var(--ink-820);color:var(--chalk);
+  border:1px solid var(--ink-700);border-radius:2px;
+  font-family:var(--f-ui);font-size:14px;
+  transition:border-color .22s,background .22s;
+}
+input[type=number]{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+textarea{min-height:76px;resize:vertical;line-height:1.55;font-size:13.5px}
+input:hover,select:hover,textarea:hover{border-color:var(--ink-620)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--verd);background:var(--ink-780)}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink-380) 50%),linear-gradient(135deg,var(--ink-380) 50%,transparent 50%);background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+
+/* module toggle card */
+.mod{border:1px solid var(--ink-700);border-radius:2px;margin-bottom:12px;transition:border-color .28s,background .28s}
+.mod.on{border-color:var(--verd-lo);background:var(--ink-820)}
+.mod-bar{display:flex;align-items:center;gap:13px;padding:14px 16px;cursor:pointer;user-select:none}
+.mod-bar:hover .mod-name{color:#fff}
+.tick{
+  width:17px;height:17px;flex:0 0 17px;border:1px solid var(--ink-620);border-radius:2px;
+  display:grid;place-items:center;transition:border-color .22s,background .22s;
+}
+.mod.on .tick{background:var(--verd);border-color:var(--verd)}
+.tick svg{width:10px;height:10px;opacity:0;transition:opacity .22s}
+.mod.on .tick svg{opacity:1}
+.mod-name{font-size:14.5px;transition:color .22s}
+.mod-tag{margin-left:auto;font-family:var(--f-mono);font-size:11px;color:var(--ink-380);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mod.on .mod-tag{color:var(--verd)}
+.mod-body{display:none;padding:0 16px 16px;border-top:1px solid var(--ink-700);margin-top:0}
+.mod.on .mod-body{display:block;padding-top:16px}
+
+/* custom, user-added position */
+.mod.custom{border-color:var(--verd-lo);background:var(--ink-820)}
+.mod.custom .mod-bar{cursor:default;gap:10px}
+.mod.custom .cname{flex:1;padding:8px 11px;font-size:14px}
+.rm{
+  flex:0 0 auto;background:none;border:1px solid var(--ink-620);border-radius:2px;
+  color:var(--ink-380);width:26px;height:26px;line-height:1;cursor:pointer;
+  font-size:15px;transition:color .2s,border-color .2s;
+}
+.rm:hover{color:#E4E8ED;border-color:var(--ink-500)}
+.addbtn{
+  width:100%;padding:12px;border:1px dashed var(--ink-620);border-radius:2px;
+  background:none;color:var(--ink-260);cursor:pointer;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  transition:border-color .22s,color .22s,background .22s;
+}
+.addbtn:hover{border-color:var(--verd);color:var(--chalk);background:var(--verd-glow)}
+
+.note{font-size:11.5px;color:var(--ink-500);line-height:1.5;margin-top:7px}
+.derived{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  background:var(--ink-780);border:1px dashed var(--ink-620);border-radius:2px;
+  padding:10px 13px;margin-top:10px;font-size:12.5px;color:var(--ink-260);
+}
+.derived b{font-family:var(--f-mono);color:var(--verd);font-weight:400}
+
+/* settings box, no toggle */
+.box{border:1px solid var(--ink-700);border-radius:2px;padding:16px;margin-bottom:12px;background:var(--ink-860)}
+.box-h{font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-380);margin-bottom:13px}
+
+/* staff tiers, fully editable */
+.tiers{display:grid;gap:8px;margin-top:4px}
+.tier{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}
+.tier.live input{border-color:var(--verd-lo);background:var(--ink-780)}
+.tier .tl{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-380);margin-bottom:5px;display:block}
+.tier.live .tl{color:var(--verd)}
+
+/* sheet */
+.sheet-wrap{position:sticky;top:86px}
+@media (max-width:1080px){.sheet-wrap{position:static}}
+.sheet-tabs{display:flex;gap:2px;margin-bottom:14px}
+.sheet-tabs button{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  background:none;border:var(--rule);border-radius:2px;color:var(--ink-380);
+  padding:8px 13px;cursor:pointer;transition:color .22s,border-color .22s;
+}
+.sheet-tabs button:hover{color:var(--chalk)}
+.sheet-tabs button.on{color:var(--verd);border-color:var(--verd-lo)}
+
+.sheet{
+  background:var(--paper);color:var(--paper-ink);
+  border-radius:2px;padding:clamp(26px,3vw,42px);
+  box-shadow:0 40px 80px -32px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.05);
+  max-height:calc(100vh - 190px);overflow-y:auto;
+  font-size:13px;line-height:1.6;
+}
+@media (max-width:1080px){.sheet{max-height:none}}
+.sheet::-webkit-scrollbar{width:9px}
+.sheet::-webkit-scrollbar-thumb{background:var(--paper-2);border-radius:9px}
+
+.sh-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:12px;border-bottom:1.5px solid var(--paper-ink)}
+.sh-firm{font-family:var(--f-display);font-size:17px}
+.sh-from{font-family:var(--f-mono);font-size:10px;line-height:1.7;color:var(--paper-mid);text-align:right}
+.sh-to{margin:26px 0 22px;line-height:1.65}
+.sh-line{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:10px;letter-spacing:.05em;color:var(--paper-mid);margin-bottom:24px}
+.sh-subj{font-family:var(--f-display);font-size:19px;margin-bottom:16px}
+.sh-p{margin-bottom:12px}
+.sh-h{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.19em;text-transform:uppercase;
+  color:var(--paper-mid);margin:26px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--paper-2);
+}
+.sh-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.sh-tbl td{padding:9px 0;border-bottom:1px solid rgba(21,24,27,.08);vertical-align:top}
+.sh-tbl td.r{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:14px}
+.sh-tbl .desc{display:block;color:var(--paper-mid);font-size:11.5px;line-height:1.5;margin-top:3px}
+.sh-tbl .basis{display:block;color:var(--paper-mid);font-family:var(--f-mono);font-size:10.5px;margin-top:3px}
+.sh-sum td{border-top:1.5px solid var(--paper-ink);border-bottom:none;font-weight:600;padding-top:11px}
+.sh-grand{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  margin-top:24px;padding-top:16px;border-top:1.5px solid var(--paper-ink);
+}
+.sh-grand > span{font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-mid)}
+.sh-grand .amount{font-family:var(--f-mono);font-size:clamp(22px,3vw,34px);line-height:1;letter-spacing:-.025em;text-align:right}
+.sh-fine{font-size:11px;color:var(--paper-mid);line-height:1.65;padding-left:16px;margin:10px 0 0}
+.sh-fine li{margin-bottom:4px}
+.sh-sign{display:flex;justify-content:space-between;gap:30px;margin-top:44px;font-size:11.5px}
+.sh-sign div{flex:1}
+.sh-sign i{display:block;border-top:1px solid var(--paper-ink);margin-top:42px;padding-top:5px;font-style:normal;color:var(--paper-mid)}
+.sh-empty{padding:50px 0;text-align:center;color:var(--paper-mid);font-size:12.5px}
+.sh-intern{
+  background:#E8E3D4;border-left:3px solid #A8935F;
+  padding:10px 13px;margin-bottom:18px;font-size:11.5px;color:#4A4433;line-height:1.5;
+}
+
+/* actions */
+.actions{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}
+.btn{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  padding:12px 20px;border-radius:2px;cursor:pointer;border:1px solid var(--verd);
+  background:var(--verd);color:#08120F;transition:opacity .22s,transform .22s;
+}
+.btn:hover{opacity:.86}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:none;color:var(--chalk);border-color:var(--ink-620)}
+.btn.ghost:hover{border-color:var(--verd);background:var(--verd-glow);opacity:1}
+
+/* ============================================================
+   FOOT
+   ============================================================ */
+.foot{padding:44px 0;border-top:var(--rule);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-500);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* ============================================================
+   A11Y + PRINT
+   ============================================================ */
+:focus-visible{outline:2px solid var(--verd);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0ms!important;transition-duration:.001ms!important}
+}
+@media print{
+  body{background:#fff;color:#000}
+  body::before{display:none}
+  .topbar,.tool-grid > form,.sheet-tabs,.actions,.foot{display:none!important}
+  .tool-grid{display:block;padding:0}
+  .sheet-wrap{position:static}
+  .sheet{box-shadow:none;max-height:none;overflow:visible;padding:0;background:#fff;border-radius:0}
+  .sheet::-webkit-scrollbar{display:none}
+  @page{size:A4;margin:18mm}
+}
+</style>
+</head>
+<body>
+
+<datalist id="rates"></datalist>
+
+<header class="topbar">
+  <div class="shell">
+    <div class="brand">Offerten<em>werk</em></div>
+  </div>
+</header>
+
+<section class="tool" id="werkzeug">
+  <div class="shell">
+    <div class="tool-grid">
+      <!-- ---------- FORM ---------- -->
+      <form id="form" autocomplete="off">
+
+        <!-- ============ 01 KUNDE ============ -->
+        <div class="step">
+          <div class="step-head">
+            <div class="step-n">01</div>
+            <div><div class="step-t">Wer ist der Kunde?</div><div class="step-q">Firma und Ansprechpartner</div></div>
+          </div>
+          <div class="field"><label for="k_firma">Firma oder Name</label><input type="text" id="k_firma" placeholder="Swiss Rail Services AG"></div>
+          <div class="row2">
+            <div class="field"><label for="k_zhd">Zu Handen</label><input type="text" id="k_zhd" placeholder="Herr Marc Geiger"></div>
+            <div class="field"><label for="k_anrede">Anrede</label><input type="text" id="k_anrede" value="Sehr geehrte Damen und Herren"></div>
+          </div>
+          <div class="row3">
+            <div class="field" style="grid-column:span 2"><label for="k_strasse">Strasse</label><input type="text" id="k_strasse"></div>
+            <div class="field"><label for="k_plz">PLZ</label><input type="text" id="k_plz"></div>
+          </div>
+          <div class="field"><label for="k_ort">Ort</label><input type="text" id="k_ort"></div>
+        </div>
+
+        <!-- ============ 02 GRÜNDUNG ============ -->
+        <div class="step">
+          <div class="step-head">
+            <div class="step-n">02</div>
+            <div><div class="step-t">Ist eine Gründung dabei?</div><div class="step-q">Nur bei Neugründungen, nicht bei bestehenden Mandaten</div></div>
+          </div>
+          <div class="mod" id="mGrund">
+            <div class="mod-bar" data-toggle="mGrund" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Gründung der Gesellschaft</span>
+              <span class="mod-tag" id="tagGrund">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="g_name">Bezeichnung in der Offerte</label><input type="text" id="g_name" value="Gründung der Gesellschaft"></div>
+              <div class="field"><label for="g_txt">Beschrieb</label><textarea id="g_txt">Für die Gründung Ihrer Gesellschaft arbeiten wir mit einem lokalen Notar zusammen. Der Notar erstellt sämtliche erforderlichen Unterlagen und koordiniert die Gründerversammlung mit Ihnen.</textarea></div>
+              <div class="field"><label for="g_basis">Zusatzzeile</label><input type="text" id="g_basis" value="Inkl. Notar und Handelsregistergebühren"></div>
+              <div class="row2">
+                <div class="field"><label for="g_von">Von, CHF</label><input type="number" id="g_von" value="2000" step="100" min="0"></div>
+                <div class="field"><label for="g_bis">Bis, CHF</label><input type="number" id="g_bis" value="2500" step="100" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 03 BUCHHALTUNG & STEUERN ============ -->
+        <div class="step">
+          <div class="step-head">
+            <div class="step-n">03</div>
+            <div><div class="step-t">Buchhaltung und Steuern</div><div class="step-q">Nach effektivem Aufwand, mit Bandbreite in der Offerte</div></div>
+          </div>
+
+          <div class="mod on" id="mBuch">
+            <div class="mod-bar" data-toggle="mBuch" role="button" tabindex="0" aria-pressed="true">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Buchhaltung</span>
+              <span class="mod-tag" id="tagBuch">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="b_name">Bezeichnung in der Offerte</label><input type="text" id="b_name" value="Buchhaltung"></div>
+              <div class="field"><label for="b_txt">Beschrieb</label><textarea id="b_txt">Laufende Buchführung, Debitoren und Kreditoren, Vorbereitung und Erstellung des Jahresabschlusses nach OR inklusive Protokoll der Generalversammlung.</textarea></div>
+
+              <div class="box">
+                <div class="box-h">Laufende Buchführung</div>
+                <div class="row3">
+                  <div class="field"><label for="b_bu">Buchungen / Jahr</label><input type="number" id="b_bu" value="1000" step="100" min="0"></div>
+                  <div class="field"><label for="b_bph">Buchungen / Std.</label><input type="number" id="b_bph" value="50" step="5" min="1"></div>
+                  <div class="field"><label for="b_ans">Ansatz, CHF/Std.</label><input type="number" id="b_ans" value="160" step="10" min="0" list="rates"></div>
+                </div>
+                <div class="derived"><span id="dBuchLabel">20.0 Std.</span><b id="dBuchB">CHF 3'200</b></div>
+              </div>
+
+              <div class="box">
+                <div class="box-h">Jahresabschluss · Vier-Augen-Prinzip</div>
+                <div class="row2">
+                  <div class="field"><label for="b_a1">Std. Bearbeitung</label><input type="number" id="b_a1" value="8" step="1" min="0"></div>
+                  <div class="field"><label for="b_a1r">Ansatz, CHF/Std.</label><input type="number" id="b_a1r" value="160" step="10" min="0" list="rates"></div>
+                </div>
+                <div class="row2">
+                  <div class="field"><label for="b_a2">Std. Kontrolle</label><input type="number" id="b_a2" value="2" step="1" min="0"></div>
+                  <div class="field"><label for="b_a2r">Ansatz, CHF/Std.</label><input type="number" id="b_a2r" value="250" step="10" min="0" list="rates"></div>
+                </div>
+                <div class="derived"><span>Jahresabschluss</span><b id="dBuchA">CHF 1'780</b></div>
+              </div>
+
+              <div class="box">
+                <div class="box-h">Zwischenabschlüsse</div>
+                <div class="row3">
+                  <div class="field"><label for="b_zw">Anzahl</label><input type="number" id="b_zw" value="0" step="1" min="0"></div>
+                  <div class="field"><label for="b_zwh">Std. je Stück</label><input type="number" id="b_zwh" value="4" step="1" min="0"></div>
+                  <div class="field"><label for="b_zwr">Ansatz, CHF/Std.</label><input type="number" id="b_zwr" value="160" step="10" min="0" list="rates"></div>
+                </div>
+              </div>
+
+              <div class="field"><label for="b_basis">Zusatzzeile in der Offerte</label><input type="text" id="b_basis" value="Basierend auf einem Volumen von rund {buchungen} Buchungen pro Jahr"></div>
+              <p class="note">{buchungen} wird durch die Anzahl aus dem Feld oben ersetzt. Stunden und Ansätze erscheinen nie in der Offerte.</p>
+            </div>
+          </div>
+
+          <div class="mod on" id="mSteu">
+            <div class="mod-bar" data-toggle="mSteu" role="button" tabindex="0" aria-pressed="true">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Steuern</span>
+              <span class="mod-tag" id="tagSteu">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="s_name">Bezeichnung in der Offerte</label><input type="text" id="s_name" value="Steuererklärung"></div>
+              <div class="field"><label for="s_txt">Beschrieb</label><textarea id="s_txt">Fristverlängerung beantragen, Ausfüllen der Steuererklärung inklusive Zusammenstellung der notwendigen Unterlagen, Kontrolle der Steuerrechnungen und der Steuerveranlagung.</textarea></div>
+              <div class="box">
+                <div class="box-h">Aufwand</div>
+                <div class="row2">
+                  <div class="field"><label for="s_h1">Std. Bearbeitung</label><input type="number" id="s_h1" value="6" step="1" min="0"></div>
+                  <div class="field"><label for="s_r1">Ansatz, CHF/Std.</label><input type="number" id="s_r1" value="160" step="10" min="0" list="rates"></div>
+                </div>
+                <div class="row2">
+                  <div class="field"><label for="s_h2">Std. Kontrolle</label><input type="number" id="s_h2" value="2" step="1" min="0"></div>
+                  <div class="field"><label for="s_r2">Ansatz, CHF/Std.</label><input type="number" id="s_r2" value="250" step="10" min="0" list="rates"></div>
+                </div>
+                <div class="derived"><span>Steuern</span><b id="dSteu">CHF 1'460</b></div>
+              </div>
+              <div class="field"><label for="s_basis">Zusatzzeile in der Offerte</label><input type="text" id="s_basis" value="Nach effektivem Aufwand"></div>
+            </div>
+          </div>
+
+          <div class="mod on" id="mMwstJ">
+            <div class="mod-bar" data-toggle="mMwstJ" role="button" tabindex="0" aria-pressed="true">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Mehrwertsteuer</span>
+              <span class="mod-tag" id="tagMwstJ">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="mwst_name">Bezeichnung in der Offerte</label><input type="text" id="mwst_name" value="Mehrwertsteuer"></div>
+              <div class="field"><label for="mwst_txt">Beschrieb</label><textarea id="mwst_txt">Ausfüllen der quartalsweisen MWST-Abrechnungen sowie Erstellung der jährlichen Umsatzabstimmung.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="mwst_pr">Von, CHF pro Jahr</label><input type="number" id="mwst_pr" value="750" step="50" min="0"></div>
+                <div class="field"><label for="mwst_bis">Bis, CHF</label><input type="number" id="mwst_bis" value="" step="50" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+              <div class="field"><label for="mwst_basis">Zusatzzeile in der Offerte</label><input type="text" id="mwst_basis" value="Pauschale pro Jahr"></div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-h">Bandbreite für Aufwandpositionen</div>
+            <div class="row2">
+              <div class="field"><label for="pct_lo">Von, % des berechneten Werts</label><input type="number" id="pct_lo" value="95" step="5" min="0"></div>
+              <div class="field"><label for="pct_hi">Bis, %</label><input type="number" id="pct_hi" value="110" step="5" min="0"></div>
+            </div>
+            <p class="note">Buchhaltung und Steuern erscheinen in der Offerte als Spanne statt als exakter Betrag. Für einen Fixbetrag beide Felder auf 100 setzen.</p>
+          </div>
+        </div>
+
+        <!-- ============ 04 MITARBEITENDE ============ -->
+        <div class="step">
+          <div class="step-head">
+            <div class="step-n">04</div>
+            <div><div class="step-t">Wie viele Mitarbeitende?</div><div class="step-q">Stufen und Ansätze frei anpassbar</div></div>
+          </div>
+          <div class="mod on" id="mPers">
+            <div class="mod-bar" data-toggle="mPers" role="button" tabindex="0" aria-pressed="true">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Personaladministration</span>
+              <span class="mod-tag" id="tagPers">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="p_name">Bezeichnung in der Offerte</label><input type="text" id="p_name" value="Lohnbuchhaltung und Personaladministration"></div>
+              <div class="field"><label for="p_txt">Beschrieb</label><textarea id="p_txt">Monatliche Lohnabrechnungen inklusive Bonusabrechnungen, Administration mit den Sozialversicherungen, Pensionskasse und Unfallversicherung, quartalsweise Erstellung der Quellensteuerabrechnungen sowie jährliche Lohndeklaration und Lohnausweise.</textarea></div>
+              <div class="field"><label for="p_n">Anzahl Mitarbeitende</label><input type="number" id="p_n" value="5" min="0" step="1"></div>
+
+              <div class="box">
+                <div class="box-h">Stufen, CHF pro Mitarbeiter und Jahr</div>
+                <div class="tiers" id="tiers">
+                  <div class="tier" data-i="1">
+                    <div><span class="tl">Stufe 1 · bis MA</span><input type="number" id="p_b1" value="2" step="1" min="1"></div>
+                    <div><span class="tl">CHF</span><input type="number" id="p_t1" value="1000" step="50" min="0"></div>
+                  </div>
+                  <div class="tier" data-i="2">
+                    <div><span class="tl">Stufe 2 · bis MA</span><input type="number" id="p_b2" value="7" step="1" min="1"></div>
+                    <div><span class="tl">CHF</span><input type="number" id="p_t2" value="900" step="50" min="0"></div>
+                  </div>
+                  <div class="tier" data-i="3">
+                    <div><span class="tl">Stufe 3 · bis MA</span><input type="number" id="p_b3" value="15" step="1" min="1"></div>
+                    <div><span class="tl">CHF</span><input type="number" id="p_t3" value="800" step="50" min="0"></div>
+                  </div>
+                  <div class="tier" data-i="4">
+                    <div><span class="tl">Stufe 4 · darüber</span><input type="text" value="ab 16" disabled></div>
+                    <div><span class="tl">CHF</span><input type="number" id="p_t4" value="700" step="50" min="0"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="derived"><span id="dPersLabel">5 Mitarbeitende à CHF 900</span><b id="dPers">CHF 4'500</b></div>
+              <div class="field" style="margin-top:14px"><label for="p_basis">Zusatzzeile in der Offerte</label><input type="text" id="p_basis" value="{anzahl} Mitarbeitende à CHF {ansatz} pro Jahr"></div>
+              <p class="note">Sobald diese Position aktiv ist, werden „Lohnbuchhaltung einrichten“ und „Mitarbeitende erfassen“ in Schritt 05 automatisch mit angekreuzt.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 05 EINMALIGE ARBEITEN ============ -->
+        <div class="step">
+          <div class="step-head">
+            <div class="step-n">05</div>
+            <div><div class="step-t">Einmalige Arbeiten</div><div class="step-q">Nur beim Start des Mandats</div></div>
+          </div>
+
+          <div class="mod" id="mSetBuch">
+            <div class="mod-bar" data-toggle="mSetBuch" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Buchhaltung einrichten</span>
+              <span class="mod-tag" id="tagSetBuch">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="set_buch_name">Bezeichnung</label><input type="text" id="set_buch_name" value="Einrichtung der Buchhaltung"></div>
+              <div class="field"><label for="set_buch_txt">Beschrieb</label><textarea id="set_buch_txt">Einrichtung der Buchhaltung, Abstimmung des Kontenplans mit Ihren Bedürfnissen.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="set_buch_pr">Von, CHF</label><input type="number" id="set_buch_pr" value="500" step="50" min="0"></div>
+                <div class="field"><label for="set_buch_bis">Bis, CHF</label><input type="number" id="set_buch_bis" value="" step="50" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mod" id="mSetMwst">
+            <div class="mod-bar" data-toggle="mSetMwst" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">MWST-Registrierung</span>
+              <span class="mod-tag" id="tagSetMwst">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="set_mwst_name">Bezeichnung</label><input type="text" id="set_mwst_name" value="Registrierung Mehrwertsteuer"></div>
+              <div class="field"><label for="set_mwst_txt">Beschrieb</label><textarea id="set_mwst_txt">Registrierung bei der Eidgenössischen Steuerverwaltung.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="set_mwst_pr">Von, CHF</label><input type="number" id="set_mwst_pr" value="500" step="50" min="0"></div>
+                <div class="field"><label for="set_mwst_bis">Bis, CHF</label><input type="number" id="set_mwst_bis" value="" step="50" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mod" id="mSetLohn">
+            <div class="mod-bar" data-toggle="mSetLohn" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Lohnbuchhaltung einrichten</span>
+              <span class="mod-tag" id="tagSetLohn">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="set_lohn_name">Bezeichnung</label><input type="text" id="set_lohn_name" value="Einrichtung der Lohnbuchhaltung"></div>
+              <div class="field"><label for="set_lohn_txt">Beschrieb</label><textarea id="set_lohn_txt">Einrichtung der Lohnbuchhaltung und Anmeldung bei den Sozialversicherungen.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="set_lohn_pr">Von, CHF</label><input type="number" id="set_lohn_pr" value="500" step="50" min="0"></div>
+                <div class="field"><label for="set_lohn_bis">Bis, CHF</label><input type="number" id="set_lohn_bis" value="750" step="50" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mod" id="mSetMA">
+            <div class="mod-bar" data-toggle="mSetMA" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Mitarbeitende erfassen</span>
+              <span class="mod-tag" id="tagSetMA">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="set_ma_name">Bezeichnung</label><input type="text" id="set_ma_name" value="Erfassung Mitarbeitende"></div>
+              <div class="field"><label for="set_ma_txt">Beschrieb</label><textarea id="set_ma_txt">Erfassung der Mitarbeitenden bei den Sozialversicherungen.</textarea></div>
+              <div class="field"><label for="set_ma_pr">CHF pro Mitarbeiter</label><input type="number" id="set_ma_pr" value="200" step="50" min="0"></div>
+              <p class="note">Wird mit der Anzahl Mitarbeitende aus Schritt 04 multipliziert.</p>
+            </div>
+          </div>
+
+          <div class="mod" id="mSetVers">
+            <div class="mod-bar" data-toggle="mSetVers" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Personalversicherungen</span>
+              <span class="mod-tag" id="tagSetVers">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="set_vers_name">Bezeichnung</label><input type="text" id="set_vers_name" value="Personalversicherungen"></div>
+              <div class="field"><label for="set_vers_txt">Beschrieb</label><textarea id="set_vers_txt">Unterstützung beim Abschluss von Pensionskassen-Verträgen sowie Unfall- und Krankentaggeld-Versicherung.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="set_vers_pr">Von, CHF</label><input type="number" id="set_vers_pr" value="250" step="50" min="0"></div>
+                <div class="field"><label for="set_vers_bis">Bis, CHF</label><input type="number" id="set_vers_bis" value="" step="50" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mod" id="mOnce">
+            <div class="mod-bar" data-toggle="mOnce" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Übernahme bestehender Buchhaltung</span>
+              <span class="mod-tag" id="tagOnce">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="o_name">Bezeichnung</label><input type="text" id="o_name" value="Übernahme der bestehenden Buchhaltung"></div>
+              <div class="field"><label for="o_txt">Beschrieb</label><textarea id="o_txt">Übernahme der bestehenden Buchhaltung, Abgleich der Eröffnungsbilanz mit dem bisherigen Treuhänder.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="o_std">Stunden</label><input type="number" id="o_std" value="10" step="1" min="0"></div>
+                <div class="field"><label for="o_ans">Ansatz, CHF/Std.</label><input type="number" id="o_ans" value="160" step="10" min="0" list="rates"></div>
+              </div>
+              <div class="field"><label for="o_basis">Zusatzzeile in der Offerte</label><input type="text" id="o_basis" value="Nach effektivem Aufwand"></div>
+            </div>
+          </div>
+
+          <div id="onceList"></div>
+          <button type="button" class="addbtn" data-add="once">+ Eigene einmalige Position</button>
+        </div>
+
+        <!-- ============ 06 PAUSCHALEN ============ -->
+        <div class="step">
+          <div class="step-head">
+            <div class="step-n">06</div>
+            <div><div class="step-t">Pauschalen dazu?</div><div class="step-q">Werden fest pro Jahr verrechnet</div></div>
+          </div>
+
+          <div class="mod" id="mVR">
+            <div class="mod-bar" data-toggle="mVR" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Verwaltungsratsmandat</span>
+              <span class="mod-tag" id="tagVR">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="v_name">Bezeichnung</label><input type="text" id="v_name" value="Verwaltungsratsmandat"></div>
+              <div class="field"><label for="v_txt">Beschrieb</label><textarea id="v_txt">Übernahme des Verwaltungsratsmandats, Teilnahme an Sitzungen und Unterzeichnung der gesetzlich erforderlichen Dokumente.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="v_pr">Von, CHF pro Jahr</label><input type="number" id="v_pr" value="5000" step="100" min="0"></div>
+                <div class="field"><label for="v_pr_bis">Bis, CHF pro Jahr</label><input type="number" id="v_pr_bis" value="" step="100" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+              <div class="field"><label for="v_basis">Zusatzzeile</label><input type="text" id="v_basis" value="Pauschale pro Jahr"></div>
+              <p class="note">Abhängig vom Risiko des Mandats.</p>
+            </div>
+          </div>
+
+          <div class="mod" id="mDom">
+            <div class="mod-bar" data-toggle="mDom" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Domizil, c/o-Adresse</span>
+              <span class="mod-tag" id="tagDom">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="d_name">Bezeichnung</label><input type="text" id="d_name" value="Gesellschaftsdomizil, c/o-Adresse"></div>
+              <div class="field"><label for="d_txt">Beschrieb</label><textarea id="d_txt" style="min-height:150px">Gewährung des Gesellschaftsdomizils an unserer Adresse.
+
+Je nach Ihren Bedürfnissen leiten wir die eingehende Post täglich oder wöchentlich an Sie weiter. Sie können uns vorgängig mitteilen, ob die Post durch uns geöffnet oder ungeöffnet weitergeleitet werden soll. Alternativ besteht die Möglichkeit, dass wir die eingegangene Post öffnen, digitalisieren und Ihnen die Dokumente täglich per E-Mail zustellen.
+
+Die Leistungen im Zusammenhang mit der Postbearbeitung und Postweiterleitung werden nach effektivem Aufwand verrechnet.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="d_pr">Von, CHF pro Jahr</label><input type="number" id="d_pr" value="2500" step="100" min="0"></div>
+                <div class="field"><label for="d_bis">Bis, CHF pro Jahr</label><input type="number" id="d_bis" value="" step="100" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+              <div class="field"><label for="d_basis">Zusatzzeile</label><input type="text" id="d_basis" value="Pauschale pro Jahr, zuzüglich Postbearbeitung nach Aufwand"></div>
+              <p class="note">Der Von-Betrag folgt automatisch dem Verwaltungsratsmandat: CHF 2'500 mit VR, sonst CHF 4'000. Sobald von Hand geändert, bleibt der Wert stehen.</p>
+            </div>
+          </div>
+
+          <div class="mod" id="mBue">
+            <div class="mod-bar" data-toggle="mBue" role="button" tabindex="0" aria-pressed="false">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Pro forma eigene Büros</span>
+              <span class="mod-tag" id="tagBue">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="f_name">Bezeichnung</label><input type="text" id="f_name" value="Pro forma eigene Büros"></div>
+              <div class="field"><label for="f_txt">Beschrieb</label><textarea id="f_txt" style="min-height:150px">Zurverfügungstellung eigener Büroräumlichkeiten pro forma, inklusive Infrastruktur, ohne c/o-Adresse.
+
+Je nach Ihren Bedürfnissen leiten wir die eingehende Post täglich oder wöchentlich an Sie weiter. Sie können uns vorgängig mitteilen, ob die Post durch uns geöffnet oder ungeöffnet weitergeleitet werden soll. Alternativ besteht die Möglichkeit, dass wir die eingegangene Post öffnen, digitalisieren und Ihnen die Dokumente täglich per E-Mail zustellen.
+
+Die Leistungen im Zusammenhang mit der Postbearbeitung und Postweiterleitung werden nach effektivem Aufwand verrechnet.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="f_pr">Von, CHF pro Jahr</label><input type="number" id="f_pr" value="4000" step="100" min="0"></div>
+                <div class="field"><label for="f_bis">Bis, CHF pro Jahr</label><input type="number" id="f_bis" value="" step="100" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+              <div class="field"><label for="f_basis">Zusatzzeile</label><input type="text" id="f_basis" value="Pauschale pro Jahr, zuzüglich Postbearbeitung nach Aufwand"></div>
+            </div>
+          </div>
+
+          <div class="mod" id="mPak" style="display:none">
+            <div class="mod-bar" data-toggle="mPak" role="button" tabindex="0" aria-pressed="true">
+              <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="#08120F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="mod-name">Paketpreis statt Einzelpreise</span>
+              <span class="mod-tag" id="tagPak">–</span>
+            </div>
+            <div class="mod-body">
+              <div class="field"><label for="pk_name">Bezeichnung</label><input type="text" id="pk_name" value="Verwaltungsrat und Domizil"></div>
+              <div class="field"><label for="pk_txt">Beschrieb</label><textarea id="pk_txt" style="min-height:130px">Übernahme des Verwaltungsratsmandats sowie Gewährung des Gesellschaftsdomizils.
+
+Die Leistungen im Zusammenhang mit der Postbearbeitung und Postweiterleitung werden nach effektivem Aufwand verrechnet.</textarea></div>
+              <div class="row2">
+                <div class="field"><label for="pk_pr">Von, CHF pro Jahr</label><input type="number" id="pk_pr" value="7000" step="100" min="0"></div>
+                <div class="field"><label for="pk_bis">Bis, CHF pro Jahr</label><input type="number" id="pk_bis" value="" step="100" min="0" placeholder="leer = Fixpreis"></div>
+              </div>
+              <div class="field"><label for="pk_basis">Zusatzzeile</label><input type="text" id="pk_basis" value="Paket pro Jahr"></div>
+              <p class="note">Erscheint automatisch, sobald Verwaltungsrat und Domizil beide aktiv sind. Abwählen, um beide Positionen einzeln auszuweisen.</p>
+            </div>
+          </div>
+
+          <div id="yearList"></div>
+          <button type="button" class="addbtn" data-add="year">+ Eigene jährliche Position</button>
+        </div>
+
+        <!-- ============ 07 ABSENDER ============ -->
+        <div class="step">
+          <div class="step-head">
+            <div class="step-n">07</div>
+            <div><div class="step-t">Absender und Bedingungen</div><div class="step-q">Einmal ausfüllen, wird lokal gespeichert</div></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="a_firma">Ihre Firma</label><input type="text" id="a_firma" placeholder="Muster Treuhand AG"></div>
+            <div class="field"><label for="a_strasse">Strasse</label><input type="text" id="a_strasse"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label for="a_plz">PLZ</label><input type="text" id="a_plz"></div>
+            <div class="field" style="grid-column:span 2"><label for="a_ort">Ort</label><input type="text" id="a_ort"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="a_tel">Telefon</label><input type="text" id="a_tel"></div>
+            <div class="field"><label for="a_mail">E-Mail</label><input type="text" id="a_mail"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="a_person">Bearbeiter</label><input type="text" id="a_person"></div>
+            <div class="field"><label for="a_funktion">Funktion</label><input type="text" id="a_funktion"></div>
+          </div>
+
+          <div class="box">
+            <div class="box-h">Ihre Stundenansätze</div>
+            <div class="row3">
+              <div class="field"><label for="r1">Ansatz 1</label><input type="number" id="r1" value="250" step="10" min="0"></div>
+              <div class="field"><label for="r2">Ansatz 2</label><input type="number" id="r2" value="160" step="10" min="0"></div>
+              <div class="field"><label for="r3">Ansatz 3</label><input type="number" id="r3" value="120" step="10" min="0"></div>
+            </div>
+            <p class="note">Diese drei Werte erscheinen als Vorschlag in jedem Ansatz-Feld. Jede Zeile lässt sich trotzdem frei überschreiben.</p>
+          </div>
+
+          <div class="row3">
+            <div class="field"><label for="o_nr">Offerten-Nr.</label><input type="text" id="o_nr"></div>
+            <div class="field"><label for="o_datum">Datum</label><input type="date" id="o_datum"></div>
+            <div class="field"><label for="o_gueltig">Gültig, Tage</label><input type="number" id="o_gueltig" value="60" step="10" min="1"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="o_betreff">Betreff</label><input type="text" id="o_betreff" value="Offerte Treuhanddienstleistungen"></div>
+            <div class="field"><label for="o_mwst">Mehrwertsteuer</label>
+              <select id="o_mwst"><option value="0">Preise exkl. MWST ausweisen</option><option value="8.1">MWST 8.1 % aufführen</option></select>
+            </div>
+          </div>
+          <div class="field"><label for="o_intro">Einleitung</label><textarea id="o_intro">besten Dank für das angenehme Gespräch und Ihr Interesse an unseren Dienstleistungen. Gerne unterbreiten wir Ihnen nachstehend unsere Offerte für die Betreuung Ihres Unternehmens.</textarea></div>
+          <div class="field"><label for="o_ausschluss">Nicht inbegriffen</label><textarea id="o_ausschluss">Einsprachen gegen Steuerveranlagungen und die Beantwortung detaillierter Rückfragen der Steuerbehörden. Das Einholen von Arbeitsbewilligungen.</textarea></div>
+          <div class="field"><label for="o_bed">Bedingungen, eine Zeile pro Punkt</label><textarea id="o_bed" style="min-height:120px">Buchhaltung und Steuern werden nach effektivem Zeitaufwand abgerechnet. Die genannten Beträge sind Kostenschätzungen, keine Fixpreise.
+Pauschalen gelten pro Kalenderjahr und werden jährlich im Voraus in Rechnung gestellt.
+Barauslagen, Porto- und Drittauslagen werden separat weiterverrechnet.
+Die Rechnungsstellung erfolgt aufgrund der geführten Arbeitsrapporte halbjährlich.</textarea></div>
+          <div class="field"><label for="o_outro">Schlusstext</label><textarea id="o_outro">Sollten sich während unserer Dienstleistungserbringung wesentliche Änderungen in Bezug auf das Honorar zeigen, würden wir Sie umgehend kontaktieren und eine gemeinsame Lösung finden. Wir freuen uns auf eine erfolgreiche Zusammenarbeit und stehen Ihnen für Fragen jederzeit gerne zur Verfügung.</textarea></div>
+        </div>
+      </form>
+
+      <!-- ---------- SHEET ---------- -->
+      <div>
+        <div class="sheet-wrap">
+          <div class="sheet-tabs">
+            <button type="button" class="on" id="tabDoc">Dokument</button>
+            <button type="button" id="tabCalc">Rechenweg · intern</button>
+          </div>
+          <div class="sheet" id="sheet"></div>
+          <div class="actions">
+            <button type="button" class="btn" id="btnPrint">Drucken / PDF</button>
+            <button type="button" class="btn ghost" id="btnWord">Word</button>
+            <button type="button" class="btn ghost" id="btnReset">Neue Offerte</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="shell" style="display:flex;justify-content:flex-end;width:100%">
+    <span id="footTotal">–</span>
+  </div>
+</footer>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- helpers ---------- */
+const grp=n=>Math.round(n).toLocaleString("de-CH").replace(/’/g,"'");
+const chf=n=>"CHF "+grp(n);
+const val=id=>($(id)?$(id).value.trim():"");
+const numv=id=>{const v=parseFloat($(id)&&$(id).value);return isFinite(v)?v:0;};
+const optv=id=>{const v=parseFloat($(id)&&$(id).value);return isFinite(v)?v:null;};
+const esc=s=>(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const nl2=s=>esc(s).replace(/\n/g,"<br>");
+const dmy=iso=>{if(!iso)return"";const[y,m,d]=iso.split("-");return d+"."+m+"."+y;};
+const on=id=>$(id)&&$(id).classList.contains("on");
+
+/* a position always carries a low and a high value; equal means fixed price */
+const pos=(name,desc,basis,lo,hi)=>({name,desc,basis,lo,hi:(hi!=null&&hi>lo)?hi:lo});
+/* reads a "Von / Bis" input pair into a position */
+const range=(idLo,idHi)=>[numv(idLo),optv(idHi)];
+
+/* ---------- staff tiers, boundaries and rates all editable ---------- */
+function tierPrice(n){
+  if(n<=0)return 0;
+  if(n<=numv("p_b1"))return numv("p_t1");
+  if(n<=numv("p_b2"))return numv("p_t2");
+  if(n<=numv("p_b3"))return numv("p_t3");
+  return numv("p_t4");
+}
+function tierIndex(n){
+  if(n<=0)return 0;
+  if(n<=numv("p_b1"))return 1;
+  if(n<=numv("p_b2"))return 2;
+  if(n<=numv("p_b3"))return 3;
+  return 4;
+}
+function tierLabel(n){
+  const i=tierIndex(n);
+  if(i===1)return "bis "+numv("p_b1")+" Mitarbeitende";
+  if(i===2)return (numv("p_b1")+1)+" bis "+numv("p_b2")+" Mitarbeitende";
+  if(i===3)return (numv("p_b2")+1)+" bis "+numv("p_b3")+" Mitarbeitende";
+  return "ab "+(numv("p_b3")+1)+" Mitarbeitenden";
+}
+
+/* ---------- custom positions ---------- */
+let cid=0;
+function addCustom(kind,data){
+  cid++;
+  const host=$(kind==="once"?"onceList":"yearList");
+  const d=document.createElement("div");
+  d.className="mod on custom";
+  d.innerHTML=
+    '<div class="mod-bar">'+
+      '<input type="text" class="cname" placeholder="Bezeichnung der Position">'+
+      '<span class="mod-tag ctag">–</span>'+
+      '<button type="button" class="rm" data-rm="1" title="Position entfernen" aria-label="Position entfernen">&times;</button>'+
+    '</div>'+
+    '<div class="mod-body">'+
+      '<div class="field"><label>Beschrieb</label><textarea class="cdesc"></textarea></div>'+
+      '<div class="row2">'+
+        '<div class="field"><label>Von, CHF</label><input type="number" class="clo" value="0" step="50" min="0"></div>'+
+        '<div class="field"><label>Bis, CHF</label><input type="number" class="chi" step="50" min="0" placeholder="leer = Fixpreis"></div>'+
+      '</div>'+
+      '<div class="field"><label>Zusatzzeile</label><input type="text" class="cbasis" value="'+(kind==="once"?"Pauschal":"Pauschale pro Jahr")+'"></div>'+
+    '</div>';
+  host.appendChild(d);
+  if(data){
+    d.querySelector(".cname").value=data.name||"";
+    d.querySelector(".cdesc").value=data.desc||"";
+  }
+  d.querySelector(".cname").focus();
+  render();
+}
+function readCustom(listId){
+  const out=[];
+  document.querySelectorAll("#"+listId+" .custom").forEach(el=>{
+    const lo=parseFloat(el.querySelector(".clo").value)||0;
+    const hiRaw=parseFloat(el.querySelector(".chi").value);
+    const hi=isFinite(hiRaw)&&hiRaw>lo?hiRaw:lo;
+    const name=el.querySelector(".cname").value.trim()||"Weitere Position";
+    const p=pos(name,el.querySelector(".cdesc").value.trim(),el.querySelector(".cbasis").value.trim(),lo,hi);
+    el.querySelector(".ctag").textContent=hi>lo?chf(lo)+" – "+chf(hi):chf(lo);
+    out.push(p);
+  });
+  return out;
+}
+
+/* ---------- calculation ---------- */
+function calc(){
+  const aufwand=[],pauschal=[],einmalig=[];
+  const pLo=numv("pct_lo")||100, pHi=numv("pct_hi")||100;
+  /* effort based positions are shown as a band around the computed value */
+  const band=v=>[v*pLo/100, v*pHi/100];
+
+  let buchRaw=0,steuRaw=0;
+
+  if(on("mBuch")){
+    const bu=numv("b_bu"), bph=Math.max(1,numv("b_bph"));
+    const hLauf=bu/bph;
+    const lauf=hLauf*numv("b_ans");
+    const abs=numv("b_a1")*numv("b_a1r")+numv("b_a2")*numv("b_a2r");
+    const zwi=numv("b_zw")*numv("b_zwh")*numv("b_zwr");
+    buchRaw=lauf+abs+zwi;
+    const[lo,hi]=band(buchRaw);
+    aufwand.push(pos(val("b_name")||"Buchhaltung",val("b_txt"),
+      val("b_basis").replace("{buchungen}",grp(bu)),lo,hi));
+  }
+  if(on("mSteu")){
+    steuRaw=numv("s_h1")*numv("s_r1")+numv("s_h2")*numv("s_r2");
+    const[lo,hi]=band(steuRaw);
+    aufwand.push(pos(val("s_name")||"Steuern",val("s_txt"),val("s_basis"),lo,hi));
+  }
+  if(on("mMwstJ")){
+    const[lo,hi]=range("mwst_pr","mwst_bis");
+    pauschal.push(pos(val("mwst_name")||"Mehrwertsteuer",val("mwst_txt"),val("mwst_basis"),lo,hi));
+  }
+  if(on("mPers")){
+    const n=Math.max(0,Math.round(numv("p_n"))), pr=tierPrice(n);
+    pauschal.push(pos(val("p_name")||"Personaladministration",val("p_txt"),
+      val("p_basis").replace("{anzahl}",n).replace("{ansatz}",grp(pr)),n*pr,null));
+  }
+
+  if(on("mGrund")){
+    const[lo,hi]=range("g_von","g_bis");
+    einmalig.push(pos(val("g_name")||"Gründung",val("g_txt"),val("g_basis"),lo,hi));
+  }
+  if(on("mSetBuch")){
+    const[lo,hi]=range("set_buch_pr","set_buch_bis");
+    einmalig.push(pos(val("set_buch_name"),val("set_buch_txt"),"Pauschal",lo,hi));
+  }
+  if(on("mSetMwst")){
+    const[lo,hi]=range("set_mwst_pr","set_mwst_bis");
+    einmalig.push(pos(val("set_mwst_name"),val("set_mwst_txt"),"Pauschal",lo,hi));
+  }
+  if(on("mSetLohn")){
+    const[lo,hi]=range("set_lohn_pr","set_lohn_bis");
+    einmalig.push(pos(val("set_lohn_name"),val("set_lohn_txt"),"Pauschal",lo,hi));
+  }
+  if(on("mSetMA")){
+    const n=Math.max(0,Math.round(numv("p_n"))), pr=numv("set_ma_pr");
+    einmalig.push(pos(val("set_ma_name"),val("set_ma_txt"),n+" Mitarbeitende à "+chf(pr),n*pr,null));
+  }
+  if(on("mSetVers")){
+    const[lo,hi]=range("set_vers_pr","set_vers_bis");
+    einmalig.push(pos(val("set_vers_name"),val("set_vers_txt"),"Pauschal",lo,hi));
+  }
+  if(on("mOnce")){
+    einmalig.push(pos(val("o_name"),val("o_txt"),val("o_basis"),numv("o_std")*numv("o_ans"),null));
+  }
+
+  const paket=on("mVR")&&on("mDom")&&on("mPak");
+  if(paket){
+    const[lo,hi]=range("pk_pr","pk_bis");
+    pauschal.push(pos(val("pk_name"),val("pk_txt"),val("pk_basis"),lo,hi));
+  }else{
+    if(on("mVR")){
+      const[lo,hi]=range("v_pr","v_pr_bis");
+      pauschal.push(pos(val("v_name"),val("v_txt"),val("v_basis"),lo,hi));
+    }
+    if(on("mDom")){
+      const[lo,hi]=range("d_pr","d_bis");
+      pauschal.push(pos(val("d_name"),val("d_txt"),val("d_basis"),lo,hi));
+    }
+  }
+  if(on("mBue")){
+    const[lo,hi]=range("f_pr","f_bis");
+    pauschal.push(pos(val("f_name"),val("f_txt"),val("f_basis"),lo,hi));
+  }
+
+  einmalig.push(...readCustom("onceList"));
+  pauschal.push(...readCustom("yearList"));
+
+  const sum=a=>a.reduce((s,x)=>({lo:s.lo+x.lo,hi:s.hi+x.hi}),{lo:0,hi:0});
+  const sA=sum(aufwand), sP=sum(pauschal), sE=sum(einmalig);
+  const jahr={lo:sA.lo+sP.lo, hi:sA.hi+sP.hi};
+  const mw=parseFloat(val("o_mwst"))||0;
+  const netto={lo:jahr.lo+sE.lo, hi:jahr.hi+sE.hi};
+  return{aufwand,pauschal,einmalig,sA,sP,sE,jahr,mw,buchRaw,steuRaw,
+    mwB:{lo:netto.lo*mw/100,hi:netto.hi*mw/100},
+    brutto:{lo:netto.lo*(1+mw/100),hi:netto.hi*(1+mw/100)}};
+}
+
+/* ---------- money rendering ---------- */
+const money=r=>r.hi>r.lo?chf(r.lo)+" – "+chf(r.hi):chf(r.lo);
+
+/* ---------- document ---------- */
+function buildDoc(){
+  const c=calc();
+  if(!c.aufwand.length&&!c.pauschal.length&&!c.einmalig.length&&!val("k_firma")){
+    return '<div class="sh-empty">Beantworten Sie die Fragen links.<br>Das Dokument entsteht hier.</div>';
+  }
+  const rows=list=>list.map(m=>
+    '<tr><td><strong>'+esc(m.name)+'</strong>'+
+    (m.desc?'<span class="desc">'+nl2(m.desc)+'</span>':'')+
+    (m.basis?'<span class="basis">'+esc(m.basis)+'</span>':'')+'</td>'+
+    '<td class="r">'+money(m)+'</td></tr>').join("");
+
+  let h="";
+  h+='<div class="sh-top"><div class="sh-firm">'+(esc(val("a_firma"))||"Ihre Treuhand AG")+'</div>'+
+     '<div class="sh-from">'+esc(val("a_strasse"))+'<br>'+esc(val("a_plz"))+' '+esc(val("a_ort"))+
+     (val("a_tel")?'<br>'+esc(val("a_tel")):'')+(val("a_mail")?'<br>'+esc(val("a_mail")):'')+'</div></div>';
+
+  h+='<div class="sh-to">'+(esc(val("k_firma"))||"—")+
+     (val("k_zhd")?'<br>'+esc(val("k_zhd")):'')+
+     (val("k_strasse")?'<br>'+esc(val("k_strasse")):'')+
+     ((val("k_plz")||val("k_ort"))?'<br>'+esc(val("k_plz"))+' '+esc(val("k_ort")):'')+'</div>';
+
+  h+='<div class="sh-line"><span>'+esc(val("o_nr"))+'</span><span>'+esc(val("a_ort"))+(val("a_ort")?", ":"")+dmy(val("o_datum"))+'</span></div>';
+  h+='<div class="sh-subj">'+esc(val("o_betreff"))+'</div>';
+  h+='<p class="sh-p">'+(esc(val("k_anrede"))||"Sehr geehrte Damen und Herren")+'</p>';
+  h+='<p class="sh-p">'+nl2(val("o_intro"))+'</p>';
+
+  if(c.einmalig.length){
+    h+='<div class="sh-h">Einmalige Kosten</div><table class="sh-tbl">'+rows(c.einmalig)+
+       '<tr class="sh-sum"><td>Total einmalig</td><td class="r">'+money(c.sE)+'</td></tr></table>';
+  }
+  if(c.aufwand.length){
+    h+='<div class="sh-h">Jährliche Kosten nach Aufwand</div>'+
+       '<p class="sh-fine" style="padding-left:0;margin:0 0 8px">Diese Positionen werden nach effektivem Zeitaufwand abgerechnet. Die Beträge sind Kostenschätzungen, keine Fixpreise.</p>'+
+       '<table class="sh-tbl">'+rows(c.aufwand)+
+       '<tr class="sh-sum"><td>Total Schätzung pro Jahr</td><td class="r">'+money(c.sA)+'</td></tr></table>';
+  }
+  if(c.pauschal.length){
+    h+='<div class="sh-h">Jährliche Kosten zu Pauschalpreisen</div><table class="sh-tbl">'+rows(c.pauschal)+
+       '<tr class="sh-sum"><td>Total Pauschalen pro Jahr</td><td class="r">'+money(c.sP)+'</td></tr></table>';
+  }
+
+  h+='<div class="sh-grand"><span>Total pro Jahr'+(c.mw?'':', exkl. MWST')+'</span><div class="amount">'+money(c.jahr)+'</div></div>';
+  if(c.mw){
+    h+='<table class="sh-tbl" style="margin-top:12px">'+
+       (c.sE.hi?'<tr><td>Einmalige Kosten</td><td class="r">'+money(c.sE)+'</td></tr>':'')+
+       '<tr><td>MWST '+c.mw+' %</td><td class="r">'+money(c.mwB)+'</td></tr>'+
+       '<tr class="sh-sum"><td>Total inkl. MWST</td><td class="r">'+money(c.brutto)+'</td></tr></table>';
+  }
+
+  if(val("o_ausschluss")){
+    h+='<div class="sh-h">Nicht inbegriffen</div><p class="sh-p">'+nl2(val("o_ausschluss"))+'</p>';
+  }
+
+  const bed=val("o_bed").split("\n").map(s=>s.trim()).filter(Boolean);
+  if(bed.length){
+    h+='<div class="sh-h">Bedingungen</div><ul class="sh-fine">'+
+       bed.map(b=>'<li>'+esc(b)+'</li>').join("")+
+       '<li>Preise '+(c.mw?'inklusive MWST von '+c.mw+' %':'exklusive MWST')+'.</li>'+
+       '<li>Diese Offerte gilt '+(val("o_gueltig")||60)+' Tage ab Offertdatum.</li></ul>';
+  }
+
+  h+='<p class="sh-p" style="margin-top:18px">'+nl2(val("o_outro"))+'</p>';
+  h+='<p class="sh-p" style="margin-top:20px">Freundliche Grüsse<br><br><br><strong>'+esc(val("a_person"))+'</strong>'+
+     (val("a_funktion")?'<br>'+esc(val("a_funktion")):'')+'</p>';
+  h+='<div class="sh-sign"><div><i>Ort, Datum</i></div><div><i>Unterschrift Auftraggeber</i></div></div>';
+  return h;
+}
+
+/* ---------- internal calculation view, never exported ---------- */
+function buildCalc(){
+  const c=calc();
+  const line=(a,b)=>'<tr><td>'+a+'</td><td class="r">'+b+'</td></tr>';
+  let h='<div class="sh-intern"><strong>Nur für den internen Gebrauch.</strong> Diese Ansicht erscheint weder im Ausdruck noch im Word-Export.</div>';
+
+  if(on("mBuch")){
+    const bu=numv("b_bu"), bph=Math.max(1,numv("b_bph")), hL=bu/bph;
+    h+='<div class="sh-h" style="margin-top:0">Buchhaltung</div><table class="sh-tbl">';
+    h+=line(grp(bu)+" Buchungen ÷ "+grp(bph)+" pro Std.",hL.toFixed(1)+" Std.");
+    h+=line("Laufende Buchführung à "+chf(numv("b_ans")),chf(hL*numv("b_ans")));
+    h+=line("Jahresabschluss "+numv("b_a1")+" Std. à "+chf(numv("b_a1r")),chf(numv("b_a1")*numv("b_a1r")));
+    h+=line("Kontrolle "+numv("b_a2")+" Std. à "+chf(numv("b_a2r")),chf(numv("b_a2")*numv("b_a2r")));
+    if(numv("b_zw")>0)h+=line(numv("b_zw")+" Zwischenabschlüsse à "+numv("b_zwh")+" Std.",chf(numv("b_zw")*numv("b_zwh")*numv("b_zwr")));
+    h+='<tr class="sh-sum"><td>Berechnet</td><td class="r">'+chf(c.buchRaw)+'</td></tr>';
+    h+=line("In der Offerte",money(c.aufwand.find(x=>x.name===(val("b_name")||"Buchhaltung"))||{lo:0,hi:0}));
+    h+='</table>';
+  }
+  if(on("mSteu")){
+    h+='<div class="sh-h">Steuern</div><table class="sh-tbl">';
+    h+=line(numv("s_h1")+" Std. Bearbeitung à "+chf(numv("s_r1")),chf(numv("s_h1")*numv("s_r1")));
+    h+=line(numv("s_h2")+" Std. Kontrolle à "+chf(numv("s_r2")),chf(numv("s_h2")*numv("s_r2")));
+    h+='<tr class="sh-sum"><td>Berechnet</td><td class="r">'+chf(c.steuRaw)+'</td></tr></table>';
+  }
+  if(on("mPers")){
+    const n=Math.max(0,Math.round(numv("p_n")));
+    h+='<div class="sh-h">Personaladministration</div><table class="sh-tbl">';
+    h+=line("Mitarbeitende",n);
+    h+=line("Stufe",tierLabel(n));
+    h+=line("Ansatz je Mitarbeiter",chf(tierPrice(n)));
+    h+='<tr class="sh-sum"><td>Total</td><td class="r">'+chf(n*tierPrice(n))+'</td></tr></table>';
+  }
+
+  h+='<div class="sh-h">Zusammenzug</div><table class="sh-tbl">';
+  h+=line("Nach Aufwand pro Jahr",money(c.sA));
+  h+=line("Pauschalen pro Jahr",money(c.sP));
+  h+='<tr class="sh-sum"><td>Total pro Jahr</td><td class="r">'+money(c.jahr)+'</td></tr>';
+  if(c.sE.hi)h+=line("Einmalig",money(c.sE));
+  h+='</table>';
+  h+='<p class="sh-fine" style="padding-left:0;margin-top:18px">Bandbreite in der Offerte: '+numv("pct_lo")+' % bis '+numv("pct_hi")+' % des berechneten Werts. Der Schlüssel Buchungen zu Stunden ist eine Annahme und muss an die eigene Erfahrung angepasst werden.</p>';
+  return h;
+}
+
+/* ---------- render ---------- */
+let view="doc";
+function render(){
+  /* --- state sync first, so every readout below reflects the final state --- */
+
+  /* payroll setup follows the staff module, until switched by hand */
+  const pers=on("mPers");
+  ["mSetLohn","mSetMA"].forEach(id=>{
+    const el=$(id);
+    if(pers&&el.dataset.armed!=="1"){el.classList.add("on");el.dataset.armed="1";}
+    if(!pers&&el.dataset.armed==="1"){el.classList.remove("on");el.dataset.armed="0";}
+  });
+
+  /* package appears once board mandate and domicile are both selected */
+  const pak=$("mPak"), both=on("mVR")&&on("mDom");
+  pak.style.display=both?"":"none";
+  if(both&&pak.dataset.armed!=="1"){pak.classList.add("on");pak.dataset.armed="1";}
+  if(!both){pak.dataset.armed="0";pak.classList.remove("on");}
+
+  /* domicile default follows whether we also hold the board mandate */
+  if($("d_pr").dataset.dirty!=="1"){
+    const want=String(on("mVR")?2500:4000);
+    if($("d_pr").value!==want)$("d_pr").value=want;
+  }
+
+  /* --- now compute and display --- */
+  const c=calc();
+  const set=(id,v)=>{const e=$(id);if(e)e.textContent=v;};
+  const find=n=>[...c.aufwand,...c.pauschal,...c.einmalig].find(x=>x.name===n);
+  const tag=(id,active,name)=>{
+    if(!active){set(id,"–");return;}
+    const p=find(name);
+    set(id,p?money(p):"–");
+  };
+
+  /* hourly rate suggestions */
+  $("rates").innerHTML=[numv("r1"),numv("r2"),numv("r3")]
+    .filter(v=>v>0).map(v=>'<option value="'+v+'"></option>').join("");
+
+  /* derived readouts */
+  const bph=Math.max(1,numv("b_bph")), hL=numv("b_bu")/bph;
+  set("dBuchLabel",hL.toFixed(1)+" Std. à "+chf(numv("b_ans")));
+  set("dBuchB",chf(hL*numv("b_ans")));
+  set("dBuchA",chf(numv("b_a1")*numv("b_a1r")+numv("b_a2")*numv("b_a2r")));
+  set("dSteu",chf(numv("s_h1")*numv("s_r1")+numv("s_h2")*numv("s_r2")));
+
+  /* staff tiers */
+  const n=Math.max(0,Math.round(numv("p_n"))), ti=tierIndex(n);
+  document.querySelectorAll("#tiers .tier").forEach(t=>t.classList.toggle("live",+t.dataset.i===ti));
+  set("dPersLabel",n+" Mitarbeitende à "+chf(tierPrice(n))+" · "+tierLabel(n));
+  set("dPers",chf(n*tierPrice(n)));
+
+  /* module tags */
+  tag("tagBuch",on("mBuch"),val("b_name")||"Buchhaltung");
+  tag("tagSteu",on("mSteu"),val("s_name")||"Steuern");
+  tag("tagMwstJ",on("mMwstJ"),val("mwst_name")||"Mehrwertsteuer");
+  tag("tagPers",on("mPers"),val("p_name")||"Personaladministration");
+  tag("tagGrund",on("mGrund"),val("g_name")||"Gründung");
+  tag("tagSetBuch",on("mSetBuch"),val("set_buch_name"));
+  tag("tagSetMwst",on("mSetMwst"),val("set_mwst_name"));
+  tag("tagSetLohn",on("mSetLohn"),val("set_lohn_name"));
+  tag("tagSetMA",on("mSetMA"),val("set_ma_name"));
+  tag("tagSetVers",on("mSetVers"),val("set_vers_name"));
+  tag("tagOnce",on("mOnce"),val("o_name"));
+  tag("tagVR",on("mVR"),val("v_name"));
+  tag("tagDom",on("mDom"),val("d_name"));
+  tag("tagBue",on("mBue"),val("f_name"));
+  tag("tagPak",on("mPak"),val("pk_name"));
+
+  $("sheet").innerHTML=view==="doc"?buildDoc():buildCalc();
+  $("footTotal").textContent="Total pro Jahr  "+money(c.jahr);
+  savePrefs();
+}
+
+/* ---------- interactions ---------- */
+$("d_pr").addEventListener("input",()=>{$("d_pr").dataset.dirty="1";});
+
+document.addEventListener("click",e=>{
+  const add=e.target.closest("[data-add]");
+  if(add){addCustom(add.dataset.add);return;}
+  const rm=e.target.closest("[data-rm]");
+  if(rm){rm.closest(".custom").remove();render();return;}
+  const bar=e.target.closest("[data-toggle]");
+  if(bar){
+    const card=$(bar.dataset.toggle);
+    card.classList.toggle("on");
+    bar.setAttribute("aria-pressed",card.classList.contains("on"));
+    render();
+  }
+});
+document.addEventListener("keydown",e=>{
+  if((e.key==="Enter"||e.key===" ")&&e.target.matches("[data-toggle]")){
+    e.preventDefault();e.target.click();
+  }
+});
+$("form").addEventListener("input",render);
+$("form").addEventListener("change",render);
+
+$("tabDoc").addEventListener("click",()=>{view="doc";$("tabDoc").classList.add("on");$("tabCalc").classList.remove("on");render();});
+$("tabCalc").addEventListener("click",()=>{view="calc";$("tabCalc").classList.add("on");$("tabDoc").classList.remove("on");render();});
+
+/* print and Word only ever emit the customer document, never the calculation */
+$("btnPrint").addEventListener("click",()=>{const v=view;view="doc";render();print();view=v;render();});
+$("btnWord").addEventListener("click",()=>{
+  const css=document.querySelector("style").innerHTML.replace(/@media[^{]+\{[\s\S]*?\}\s*\}/g,"");
+  const html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'+
+    '<head><meta charset="utf-8"><style>@page{size:21cm 29.7cm;margin:2cm}'+
+    'body{font-family:Helvetica,Arial,sans-serif;font-size:10.5pt;line-height:1.55;color:#15181B;background:#fff}'+css+
+    '.sheet{box-shadow:none;padding:0;max-height:none;background:#fff}</style></head>'+
+    '<body><div class="sheet">'+buildDoc()+'</div></body></html>';
+  const blob=new Blob(["﻿",html],{type:"application/msword"});
+  const a=document.createElement("a");
+  const name=(val("k_firma")||"Kunde").replace(/[^\w\sÀ-ɏ-]/g,"").trim().replace(/\s+/g,"_");
+  a.href=URL.createObjectURL(blob);a.download=name+" - Offerte.doc";a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+});
+$("btnReset").addEventListener("click",()=>{
+  ["k_firma","k_zhd","k_strasse","k_plz","k_ort"].forEach(k=>$(k).value="");
+  $("k_anrede").value="Sehr geehrte Damen und Herren";
+  document.querySelectorAll(".custom").forEach(el=>el.remove());
+  newNr();render();
+  scrollTo({top:0,behavior:RM?"auto":"smooth"});
+});
+
+/* ---------- persistence: firm settings and standard texts ---------- */
+const PREFS=[
+  "a_firma","a_strasse","a_plz","a_ort","a_tel","a_mail","a_person","a_funktion",
+  "r1","r2","r3","pct_lo","pct_hi",
+  "b_bph","b_ans","b_a1","b_a1r","b_a2","b_a2r","b_zwh","b_zwr",
+  "s_h1","s_r1","s_h2","s_r2","o_ans","o_gueltig","o_betreff",
+  "p_b1","p_b2","p_b3","p_t1","p_t2","p_t3","p_t4","set_ma_pr",
+  "b_name","b_txt","b_basis","s_name","s_txt","s_basis",
+  "mwst_name","mwst_txt","mwst_basis","mwst_pr","mwst_bis",
+  "p_name","p_txt","p_basis","g_name","g_txt","g_basis","g_von","g_bis",
+  "set_buch_name","set_buch_txt","set_buch_pr","set_buch_bis",
+  "set_mwst_name","set_mwst_txt","set_mwst_pr","set_mwst_bis",
+  "set_lohn_name","set_lohn_txt","set_lohn_pr","set_lohn_bis",
+  "set_ma_name","set_ma_txt","set_vers_name","set_vers_txt","set_vers_pr","set_vers_bis",
+  "o_name","o_txt","o_basis","v_name","v_txt","v_basis","v_pr","v_pr_bis",
+  "d_name","d_txt","d_basis","f_name","f_txt","f_basis","f_pr","f_bis",
+  "pk_name","pk_txt","pk_basis","pk_pr","pk_bis",
+  "o_intro","o_outro","o_ausschluss","o_bed"
+];
+function savePrefs(){
+  const o={};PREFS.forEach(k=>{if($(k))o[k]=$(k).value;});
+  try{localStorage.setItem("offertenwerk.prefs",JSON.stringify(o));}catch(e){}
+}
+function loadPrefs(){
+  try{
+    const o=JSON.parse(localStorage.getItem("offertenwerk.prefs")||"{}");
+    PREFS.forEach(k=>{if(o[k]!==undefined&&$(k))$(k).value=o[k];});
+  }catch(e){}
+}
+function newNr(){
+  const d=new Date();
+  $("o_nr").value="Offerte "+d.getFullYear()+"-"+(Math.floor(Math.random()*900)+100);
+}
+
+/* ---------- boot ---------- */
+function boot() {
+  try {
+    $("o_datum").value=new Date().toISOString().slice(0,10);
+    newNr();
+    loadPrefs();
+    render();
+  } catch(e) {
+    console.error("Offertenwerk boot error:",e);
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
+</script>
+
+<!-- ===================================================================
+     Ähnliche frühere Offerten
+     Optionale Erweiterung. Spricht einen lokalen Dienst an (server.py),
+     der dieselbe Retrieval-Logik benutzt wie der Messaufbau der Arbeit.
+
+     Bewusst folgenlos für alles Bestehende: Es werden keine Beträge
+     gelesen oder gesetzt, die Preisberechnung und der Export bleiben
+     unberührt. Läuft der Dienst nicht, verschwindet die Funktion
+     rückstandslos und das Werkzeug arbeitet wie zuvor.
+     =================================================================== -->
+<style>
+.sim-btn{margin-top:6px;font:inherit;font-size:11px;padding:3px 9px;border:1px solid var(--line,#d6d2ca);
+  border-radius:999px;background:transparent;color:#6b6660;cursor:pointer}
+.sim-btn:hover{background:#f2efe9;color:#2c2925}
+.sim-btn[disabled]{opacity:.45;cursor:default}
+.sim-panel{margin-top:8px;border:1px solid var(--line,#d6d2ca);border-radius:8px;
+  background:#faf8f4;padding:10px 12px;font-size:12px}
+.sim-panel h5{margin:0 0 8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8a847c}
+.sim-hit{padding:8px 0;border-top:1px solid #e8e4dc}
+.sim-hit:first-of-type{border-top:0}
+.sim-meta{display:flex;gap:8px;align-items:center;margin-bottom:4px;flex-wrap:wrap}
+.sim-src{font-size:11px;color:#8a847c;word-break:break-all}
+.sim-level{font-size:10px;padding:1px 7px;border-radius:999px;border:1px solid currentColor}
+.sim-hoch{color:#2f6b3a}.sim-mittel{color:#8a6d23}.sim-niedrig{color:#8a847c}
+.sim-text{white-space:pre-wrap;line-height:1.5;color:#3a3630;max-height:8.4em;overflow:auto}
+.sim-take{margin-top:6px;font:inherit;font-size:11px;padding:3px 9px;border:1px solid #c9c4bb;
+  border-radius:5px;background:#fff;cursor:pointer}
+.sim-take:hover{background:#f2efe9}
+.sim-note{color:#8a847c;font-size:11px}
+</style>
+<script>
+(function () {
+  "use strict";
+
+  var SERVER = "http://127.0.0.1:8000";
+  var FIELDS = ["g_txt","b_txt","s_txt","mwst_txt","p_txt","set_buch_txt","set_mwst_txt",
+                "set_lohn_txt","set_ma_txt","set_vers_txt","v_txt","d_txt","f_txt",
+                "pk_txt","o_intro","o_ausschluss","o_bed","o_outro"];
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  // Only descriptive fields are sent as context. Amounts are deliberately not
+  // collected: retrieval supplies wording, never figures.
+  function context() {
+    var out = {}, ids = ["k_name", "k_branche", "k_ma", "mandatstyp"];
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && el.value && String(el.value).trim()) out[id] = String(el.value).trim();
+    });
+    return out;
+  }
+
+  function panelFor(area) {
+    var existing = area.parentNode.querySelector(".sim-panel");
+    if (existing) return existing;
+    var box = document.createElement("div");
+    box.className = "sim-panel";
+    area.parentNode.appendChild(box);
+    return box;
+  }
+
+  function render(box, data, area) {
+    var hits = (data && data.hits) || [];
+    if (!hits.length) {
+      box.innerHTML = '<h5>Ähnliche frühere Offerten</h5>' +
+                      '<div class="sim-note">Keine passenden Stellen gefunden.</div>';
+      return;
+    }
+    var html = '<h5>Ähnliche frühere Offerten</h5>';
+    hits.forEach(function (h, i) {
+      html += '<div class="sim-hit">' +
+                '<div class="sim-meta">' +
+                  '<span class="sim-level sim-' + esc(h.level) + '">' + esc(h.level) + '</span>' +
+                  '<span class="sim-src">' + esc(h.source_document) + '</span>' +
+                '</div>' +
+                '<div class="sim-text">' + esc(h.chunk_text) + '</div>' +
+                '<button type="button" class="sim-take" data-i="' + i + '">Text übernehmen</button>' +
+              '</div>';
+    });
+    box.innerHTML = html;
+
+    box.querySelectorAll(".sim-take").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var raw = hits[Number(btn.dataset.i)].chunk_text;
+        // Retrieval supplies wording, never figures. A passage lifted from
+        // another client's offer carries that client's prices, and a stale
+        // amount riding along inside prose is easy to miss when proofreading.
+        // The sentence survives, the number has to be entered deliberately.
+        var text = raw.replace(/CHF\s*[\d'’]+(?:[.,]\d+)?/g, "CHF ___");
+        var stripped = text !== raw;
+
+        area.value = area.value.trim() ? area.value.trim() + "\n\n" + text : text;
+        // Let the existing tool react exactly as it does to typing, so the
+        // live document updates through its own code path.
+        area.dispatchEvent(new Event("input", { bubbles: true }));
+
+        btn.textContent = stripped ? "übernommen – Beträge entfernt" : "übernommen";
+        setTimeout(function () { btn.textContent = "Text übernehmen"; }, 2200);
+      });
+    });
+  }
+
+  function ask(area, btn) {
+    var box = panelFor(area);
+    box.innerHTML = '<h5>Ähnliche frühere Offerten</h5><div class="sim-note">Suche läuft …</div>';
+    btn.disabled = true;
+
+    fetch(SERVER + "/similar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ field: area.id, values: context() })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { render(box, d, area); })
+      .catch(function () {
+        box.innerHTML = '<h5>Ähnliche frühere Offerten</h5>' +
+                        '<div class="sim-note">Vorschläge nicht verfügbar. ' +
+                        'Der lokale Dienst läuft nicht.</div>';
+      })
+      .then(function () { btn.disabled = false; });
+  }
+
+  function attach() {
+    FIELDS.forEach(function (id) {
+      var area = document.getElementById(id);
+      if (!area || area.dataset.simReady) return;
+      area.dataset.simReady = "1";
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "sim-btn";
+      btn.textContent = "Ähnliche Stellen";
+      btn.addEventListener("click", function () { ask(area, btn); });
+      area.parentNode.appendChild(btn);
+    });
+  }
+
+  // The buttons appear only once the local service answers. Without it the
+  // page stays exactly as it was.
+  function probe() {
+    fetch(SERVER + "/health")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && d.ok) attach(); })
+      .catch(function () { /* no service, no buttons */ });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", probe);
+  } else {
+    probe();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Echte, unanonymisierte Klientendaten - darf nie ins Repo
+roh/
+
+# Rueckuebersetzungstabelle der Anonymisierung - wuerde corpus/ deanonymisieren
+rag-system/anonymisation_mapping.json
+
+# Grosse, ableitbare Zwischenergebnisse - jederzeit neu berechenbar
+rag-system/embeddings/
+
+# Interne Projektnotizen - nie fuer Veroeffentlichung gedacht,
+# enthalten echte Namen und explizite Vertraulichkeitsbitten
+STAGE_2_COMPLETE.md
+BUILD_SUMMARY.md
+HANDOFF.md
+HANDOFF-2026-09-08.md
+rag-system/RESEARCH_PROTOCOL.md
+
+# An den alten (namentlich belasteten) Korpus gebunden - vor Wiederaufnahme
+# neu generieren bzw. neu bewerten lassen, nicht blind uebernehmen
+rag-system/measurements/generation_sample.csv
+rag-system/measurements/generation_sample_settings.json
+rag-system/measurements/auswertung_daten.json
+rag-system/measurements/bewertungsbogen.xlsx
+rag-system/measurements/bewertungsbogen_ausgefuellt.xlsx
+
+# redundantes Buendel / veraltete Entwuerfe
+Offertenwerk.zip
+index.html
+entwurf-vergleich.html
+rag-system/measurements/report_grid.docx
+rag-system/measurements/report_letterhead.docx
+
+# System- und Editor-Muell
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log

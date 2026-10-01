@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="380" viewBox="0 0 660 380" font-family="Helvetica,Arial,sans-serif">
+<rect width="660" height="380" fill="#ffffff"/>
+<text x="70" y="20" font-size="14" font-weight="bold" fill="#222">Trefferquote des Abrufs nach Dokumentenmenge</text>
+<line x1="70" y1="325.0" x2="510" y2="325.0" stroke="#e3e3e3" stroke-width="1"/>
+<text x="62" y="329.0" font-size="10" fill="#666" text-anchor="end">0%</text>
+<line x1="70" y1="251.2" x2="510" y2="251.2" stroke="#e3e3e3" stroke-width="1"/>
+<text x="62" y="255.2" font-size="10" fill="#666" text-anchor="end">25%</text>
+<line x1="70" y1="177.5" x2="510" y2="177.5" stroke="#e3e3e3" stroke-width="1"/>
+<text x="62" y="181.5" font-size="10" fill="#666" text-anchor="end">50%</text>
+<line x1="70" y1="103.8" x2="510" y2="103.8" stroke="#e3e3e3" stroke-width="1"/>
+<text x="62" y="107.8" font-size="10" fill="#666" text-anchor="end">75%</text>
+<line x1="70" y1="30.0" x2="510" y2="30.0" stroke="#e3e3e3" stroke-width="1"/>
+<text x="62" y="34.0" font-size="10" fill="#666" text-anchor="end">100%</text>
+<line x1="70" y1="30" x2="70" y2="325" stroke="#444" stroke-width="1.5"/>
+<line x1="70" y1="325" x2="510" y2="325" stroke="#444" stroke-width="1.5"/>
+<text x="70.0" y="343" font-size="10" fill="#444" text-anchor="middle">10</text>
+<text x="216.7" y="343" font-size="10" fill="#444" text-anchor="middle">50</text>
+<text x="363.3" y="343" font-size="10" fill="#444" text-anchor="middle">100</text>
+<text x="510.0" y="343" font-size="10" fill="#444" text-anchor="middle">200</text>
+<text x="290.0" y="366" font-size="11" fill="#444" text-anchor="middle">Dokumente in der Wissensbasis</text>
+<text x="16" y="177.5" font-size="11" fill="#444" text-anchor="middle" transform="rotate(-90 16 177.5)">Trefferquote</text>
+<polyline points="70.0,260.8 216.7,274.8 363.3,290.9 510.0,300.9" fill="none" stroke="#1f4e79" stroke-width="2.5"/>
+<circle cx="70.0" cy="260.8" r="4" fill="#1f4e79"/>
+<circle cx="216.7" cy="274.8" r="4" fill="#1f4e79"/>
+<circle cx="363.3" cy="290.9" r="4" fill="#1f4e79"/>
+<circle cx="510.0" cy="300.9" r="4" fill="#1f4e79"/>
+<line x1="526" y1="44" x2="550" y2="44" stroke="#1f4e79" stroke-width="2.5"/>
+<text x="556" y="48" font-size="10" fill="#333">confusable</text>
+<polyline points="70.0,260.8 216.7,270.8 363.3,270.8 510.0,270.8" fill="none" stroke="#c0504d" stroke-width="2.5"/>
+<circle cx="70.0" cy="260.8" r="4" fill="#c0504d"/>
+<circle cx="216.7" cy="270.8" r="4" fill="#c0504d"/>
+<circle cx="363.3" cy="270.8" r="4" fill="#c0504d"/>
+<circle cx="510.0" cy="270.8" r="4" fill="#c0504d"/>
+<line x1="526" y1="64" x2="550" y2="64" stroke="#c0504d" stroke-width="2.5"/>
+<text x="556" y="68" font-size="10" fill="#333">unrelated</text>
+</svg>

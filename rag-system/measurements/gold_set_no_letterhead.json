@@ -1,0 +1,772 @@
+[
+  {
+    "case_id": "RATE_02",
+    "category": "stundensatz",
+    "kategorie": "kontrolle",
+    "scenario": "Offerte an Muster B AG",
+    "query": "What is the hourly rate for a Swiss Certified Fiduciary in the offer to Muster B AG?",
+    "expected_answer": "CHF 210",
+    "expected_document": "offerte_02_accounting_intl_anon",
+    "expected_chunk_ids": [
+      "offerte_02_accounting_intl_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "RATE_03",
+    "category": "stundensatz",
+    "kategorie": "kontrolle",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Wie hoch ist der Stundenansatz für einen Treuhänder mit eidg. Fachausweis bei der Muster A GmbH?",
+    "expected_answer": "CHF 140",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "RATE_04",
+    "category": "stundensatz",
+    "kategorie": "kontrolle",
+    "scenario": "Offerte an Muster C Ltd.",
+    "query": "What is the hourly rate for an Accounting Assistant in the offer to Muster C Ltd.?",
+    "expected_answer": "CHF 100",
+    "expected_document": "offerte_03_accounting_branch_anon",
+    "expected_chunk_ids": [
+      "offerte_03_accounting_branch_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SETMA_01",
+    "category": "setup",
+    "kategorie": "kontrolle",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Was kostet die Erfassung eines Mitarbeiters bei der Muster A GmbH?",
+    "expected_answer": "CHF 170",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SETMA_02",
+    "category": "setup",
+    "kategorie": "kontrolle",
+    "scenario": "Offerte an Muster B AG",
+    "query": "What does setting up one employee cost in the offer to Muster B AG?",
+    "expected_answer": "CHF 170",
+    "expected_document": "offerte_02_accounting_intl_anon",
+    "expected_chunk_ids": [
+      "offerte_02_accounting_intl_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "LOHN_01",
+    "category": "lohn",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Was kostet die Lohnbuchhaltung pro Mitarbeiter und Jahr in der Offerte an die Muster A GmbH?",
+    "expected_answer": "CHF 680",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_01",
+    "category": "buchhaltung",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Was kostet die jährliche Buchhaltung bei rund 3'000 bis 3'500 Transaktionen?",
+    "expected_answer": "CHF 12'750 - 15'300",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "MWST_01",
+    "category": "mwst",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Was kostet die Mehrwertsteuer-Abrechnung jährlich in der Offerte an die Muster A GmbH?",
+    "expected_answer": "CHF 1'300",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "STEU_01",
+    "category": "steuern",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Was kostet die Steuererklärung in der Offerte an die Muster A GmbH?",
+    "expected_answer": "CHF 850",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SETUP_01",
+    "category": "setup",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Was kostet die Einrichtung der Buchhaltung im TOPAL bei der Muster A GmbH?",
+    "expected_answer": "CHF 420",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SETUP_02",
+    "category": "setup",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Was kostet die Einrichtung der Lohnbuchhaltung bei der Muster A GmbH?",
+    "expected_answer": "CHF 640",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "RATE_01",
+    "category": "stundensatz",
+    "kategorie": "kontrolle",
+    "scenario": "Offerte an Muster A GmbH",
+    "query": "Wie hoch ist der Stundenansatz für einen dipl. Treuhandexperten in der Offerte an die Muster A GmbH?",
+    "expected_answer": "CHF 210",
+    "expected_document": "offerte_01_lohn_gross_anon",
+    "expected_chunk_ids": [
+      "offerte_01_lohn_gross_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_02",
+    "category": "buchhaltung",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster B AG",
+    "query": "What are the annual accounting services costs for around 100 transactions per year?",
+    "expected_answer": "CHF 1'700 - 2'100",
+    "expected_document": "offerte_02_accounting_intl_anon",
+    "expected_chunk_ids": [
+      "offerte_02_accounting_intl_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "LOHN_02",
+    "category": "lohn",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster B AG",
+    "query": "What is the salary administration fee per employee per year in the offer to Muster B AG?",
+    "expected_answer": "CHF 1'000",
+    "expected_document": "offerte_02_accounting_intl_anon",
+    "expected_chunk_ids": [
+      "offerte_02_accounting_intl_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SETUP_03",
+    "category": "setup",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster B AG",
+    "query": "What does the set-up of the accounting cost in the offer to Muster B AG?",
+    "expected_answer": "CHF 1'300",
+    "expected_document": "offerte_02_accounting_intl_anon",
+    "expected_chunk_ids": [
+      "offerte_02_accounting_intl_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "MWST_02",
+    "category": "mwst",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster B AG",
+    "query": "What does preparing the VAT declarations cost in the offer to Muster B AG?",
+    "expected_answer": "CHF 850",
+    "expected_document": "offerte_02_accounting_intl_anon",
+    "expected_chunk_ids": [
+      "offerte_02_accounting_intl_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "VERS_01",
+    "category": "versicherung",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster B AG",
+    "query": "What does assistance with arranging the insurances cost for Muster B AG?",
+    "expected_answer": "CHF 850 - 1'700",
+    "expected_document": "offerte_02_accounting_intl_anon",
+    "expected_chunk_ids": [
+      "offerte_02_accounting_intl_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_03",
+    "category": "buchhaltung",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster C Ltd.",
+    "query": "What are the annual accounting costs for around 200 transactions in the offer to Muster C Ltd.?",
+    "expected_answer": "CHF 3'400 - 3'800",
+    "expected_document": "offerte_03_accounting_branch_anon",
+    "expected_chunk_ids": [
+      "offerte_03_accounting_branch_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SETUP_04",
+    "category": "setup",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster C Ltd.",
+    "query": "What does merging the SAP accounting system cost in the offer to Muster C Ltd.?",
+    "expected_answer": "CHF 1'300",
+    "expected_document": "offerte_03_accounting_branch_anon",
+    "expected_chunk_ids": [
+      "offerte_03_accounting_branch_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "STEU_02",
+    "category": "steuern",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster C Ltd.",
+    "query": "What do the gain taxes cost in the offer to Muster C Ltd.?",
+    "expected_answer": "CHF 850",
+    "expected_document": "offerte_03_accounting_branch_anon",
+    "expected_chunk_ids": [
+      "offerte_03_accounting_branch_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "REV_01",
+    "category": "revision",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster D AG",
+    "query": "Wie hoch ist das Honorar für die eingeschränkte Revision bei der Muster D AG?",
+    "expected_answer": "CHF 3'250",
+    "expected_document": "offerte_04_revision_anon",
+    "expected_chunk_ids": [
+      "offerte_04_revision_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "REV_02",
+    "category": "revision",
+    "kategorie": "unterspezifiziert",
+    "scenario": "Offerte an Muster D AG",
+    "query": "Wie hoch ist der zusätzliche Initialaufwand im ersten Prüfungsjahr?",
+    "expected_answer": "CHF 1'300",
+    "expected_document": "offerte_04_revision_anon",
+    "expected_chunk_ids": [
+      "offerte_04_revision_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "AUD_01",
+    "category": "revision",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster E Foundation",
+    "query": "What does auditing the formation of the contribution in kind cost?",
+    "expected_answer": "CHF 1'550 - 2'100",
+    "expected_document": "offerte_05_stiftung_audit_anon",
+    "expected_chunk_ids": [
+      "offerte_05_stiftung_audit_anon_chunk_2"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "AUD_02",
+    "category": "revision",
+    "kategorie": "unterspezifiziert",
+    "scenario": "Offerte an Muster E Foundation",
+    "query": "What does the annual limited audit of the financial statements cost for the foundation?",
+    "expected_answer": "CHF 3'800 - 4'700",
+    "expected_document": "offerte_05_stiftung_audit_anon",
+    "expected_chunk_ids": [
+      "offerte_05_stiftung_audit_anon_chunk_2"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "LOHN_03",
+    "category": "lohn",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster E Foundation",
+    "query": "What is the salary administration fee per employee per year for Muster E Foundation?",
+    "expected_answer": "CHF 760",
+    "expected_document": "offerte_05_stiftung_audit_anon",
+    "expected_chunk_ids": [
+      "offerte_05_stiftung_audit_anon_chunk_2"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "GRUE_01",
+    "category": "gruendung",
+    "kategorie": "unterspezifiziert",
+    "scenario": "Offerte an H. Beispiel",
+    "query": "Was kosten die Gründung einer Gesellschaft inklusive Notar und Handelsregister?",
+    "expected_answer": "CHF 1'700",
+    "expected_document": "offerte_06_gruendung_klein_anon",
+    "expected_chunk_ids": [
+      "offerte_06_gruendung_klein_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_04",
+    "category": "buchhaltung",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an H. Beispiel",
+    "query": "Was kostet die jährliche Buchhaltung bei 150 bis 200 Transaktionen?",
+    "expected_answer": "CHF 1'700 - 2'550",
+    "expected_document": "offerte_06_gruendung_klein_anon",
+    "expected_chunk_ids": [
+      "offerte_06_gruendung_klein_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "VERS_02",
+    "category": "versicherung",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an H. Beispiel",
+    "query": "Was kosten die Personalversicherungen in der Offerte an H. Beispiel?",
+    "expected_answer": "CHF 210",
+    "expected_document": "offerte_06_gruendung_klein_anon",
+    "expected_chunk_ids": [
+      "offerte_06_gruendung_klein_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "GRUE_02",
+    "category": "gruendung",
+    "kategorie": "unterspezifiziert",
+    "scenario": "Offerte an J. Beispiel",
+    "query": "What does the company establishment cost including notary and register of commerce?",
+    "expected_answer": "CHF 2'100",
+    "expected_document": "offerte_07_gruendung_domizil_anon",
+    "expected_chunk_ids": [
+      "offerte_07_gruendung_domizil_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "VR_01",
+    "category": "verwaltungsrat",
+    "kategorie": "unterspezifiziert",
+    "scenario": "Offerte an J. Beispiel",
+    "query": "What is the annual flat rate for the board of director and authorised signatory?",
+    "expected_answer": "CHF 4'250",
+    "expected_document": "offerte_07_gruendung_domizil_anon",
+    "expected_chunk_ids": [
+      "offerte_07_gruendung_domizil_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "DOM_01",
+    "category": "domizil",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an J. Beispiel",
+    "query": "What is the annual flat rate for the domicile address in the offer to J. Beispiel?",
+    "expected_answer": "CHF 1'700",
+    "expected_document": "offerte_07_gruendung_domizil_anon",
+    "expected_chunk_ids": [
+      "offerte_07_gruendung_domizil_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "VR_02",
+    "category": "verwaltungsrat",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster F Consulting",
+    "query": "Was kostet das Mandat als Verwaltungsrat inklusive Sozialleistungen und D&O-Versicherung jährlich?",
+    "expected_answer": "CHF 5'500",
+    "expected_document": "offerte_08_gruendung_vr_anon",
+    "expected_chunk_ids": [
+      "offerte_08_gruendung_vr_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "DOM_02",
+    "category": "domizil",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster F Consulting",
+    "query": "Was kostet eine Domiziladresse pro Jahr bei der Muster F Consulting?",
+    "expected_answer": "CHF 2'100",
+    "expected_document": "offerte_08_gruendung_vr_anon",
+    "expected_chunk_ids": [
+      "offerte_08_gruendung_vr_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "DOM_03",
+    "category": "domizil",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an M. Beispiel",
+    "query": "What does the domicile address with c/o cost per year in the offer to M. Beispiel?",
+    "expected_answer": "CHF 1'300",
+    "expected_document": "offerte_09_domizil_beratung_anon",
+    "expected_chunk_ids": [
+      "offerte_09_domizil_beratung_anon_chunk_2"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "DOM_04",
+    "category": "domizil",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an M. Beispiel",
+    "query": "What does the domicile address without c/o cost per year in the offer to M. Beispiel?",
+    "expected_answer": "CHF 3'400",
+    "expected_document": "offerte_09_domizil_beratung_anon",
+    "expected_chunk_ids": [
+      "offerte_09_domizil_beratung_anon_chunk_2"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "VR_03",
+    "category": "verwaltungsrat",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an M. Beispiel",
+    "query": "What does the authorised signatory cost per year in the offer to M. Beispiel?",
+    "expected_answer": "CHF 4'250",
+    "expected_document": "offerte_09_domizil_beratung_anon",
+    "expected_chunk_ids": [
+      "offerte_09_domizil_beratung_anon_chunk_2"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_05",
+    "category": "buchhaltung",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an M. Beispiel",
+    "query": "What do the annual accounting services cost for around 250 transactions per year?",
+    "expected_answer": "CHF 3'400 - 3'800",
+    "expected_document": "offerte_09_domizil_beratung_anon",
+    "expected_chunk_ids": [
+      "offerte_09_domizil_beratung_anon_chunk_2"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_06",
+    "category": "buchhaltung",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster I AG",
+    "query": "What do the annual accounting services cost for around 200 transactions in the offer to Muster I AG?",
+    "expected_answer": "CHF 3'400 - 3'800",
+    "expected_document": "offerte_10_accounting_medtech_anon",
+    "expected_chunk_ids": [
+      "offerte_10_accounting_medtech_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "LOHN_04",
+    "category": "lohn",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster I AG",
+    "query": "What is the salary administration fee per employee per year in the offer to Muster I AG?",
+    "expected_answer": "CHF 1'000",
+    "expected_document": "offerte_10_accounting_medtech_anon",
+    "expected_chunk_ids": [
+      "offerte_10_accounting_medtech_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_07",
+    "category": "buchhaltung",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster J Association",
+    "query": "What do the annual accounting services for the Swiss finish cost?",
+    "expected_answer": "CHF 5'100 - 5'950",
+    "expected_document": "offerte_11_swiss_finish_anon",
+    "expected_chunk_ids": [
+      "offerte_11_swiss_finish_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "MWST_03",
+    "category": "mwst",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster J Association",
+    "query": "What does preparing the VAT declarations cost in the offer to Muster J Association?",
+    "expected_answer": "CHF 2'550",
+    "expected_document": "offerte_11_swiss_finish_anon",
+    "expected_chunk_ids": [
+      "offerte_11_swiss_finish_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SETUP_05",
+    "category": "setup",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster J Association",
+    "query": "What does setting up an employee cost in the offer to Muster J Association?",
+    "expected_answer": "CHF 340",
+    "expected_document": "offerte_11_swiss_finish_anon",
+    "expected_chunk_ids": [
+      "offerte_11_swiss_finish_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_08",
+    "category": "buchhaltung",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster K Reinigungen",
+    "query": "Was kostet die jährliche Buchhaltung bei rund 200 Transaktionen in der Offerte an die Muster K Reinigungen?",
+    "expected_answer": "CHF 2'550 - 3'000",
+    "expected_document": "offerte_12_lohn_reinigung_anon",
+    "expected_chunk_ids": [
+      "offerte_12_lohn_reinigung_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "LOHN_05",
+    "category": "lohn",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster K Reinigungen",
+    "query": "Was kostet die Lohnbuchhaltung pro Mitarbeiter und Jahr bei der Muster K Reinigungen?",
+    "expected_answer": "CHF 600 - 1'000",
+    "expected_document": "offerte_12_lohn_reinigung_anon",
+    "expected_chunk_ids": [
+      "offerte_12_lohn_reinigung_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SETUP_06",
+    "category": "setup",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster K Reinigungen",
+    "query": "Was kostet die Einrichtung der Lohnbuchhaltung bei der Muster K Reinigungen?",
+    "expected_answer": "CHF 420 - 640",
+    "expected_document": "offerte_12_lohn_reinigung_anon",
+    "expected_chunk_ids": [
+      "offerte_12_lohn_reinigung_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_09",
+    "category": "buchhaltung",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster L Capital",
+    "query": "What do the annual accounting services cost for around 150 transactions per year?",
+    "expected_answer": "CHF 2'550 - 3'000",
+    "expected_document": "offerte_13_holding_spaltung_anon",
+    "expected_chunk_ids": [
+      "offerte_13_holding_spaltung_anon_chunk_2"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "SONST_01",
+    "category": "sonstiges",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster L Capital",
+    "query": "What does preparing the interim financial statement for the demerger cost?",
+    "expected_answer": "CHF 1'700",
+    "expected_document": "offerte_13_holding_spaltung_anon",
+    "expected_chunk_ids": [
+      "offerte_13_holding_spaltung_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "BUCH_10",
+    "category": "buchhaltung",
+    "kategorie": "einzelquelle",
+    "scenario": "Offerte an Muster M AG",
+    "query": "Was kostet die jährliche Buchhaltung bei rund 50 Transaktionen pro Jahr?",
+    "expected_answer": "CHF 850 - 1'300",
+    "expected_document": "offerte_14_buchhaltung_klein_anon",
+    "expected_chunk_ids": [
+      "offerte_14_buchhaltung_klein_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "STEU_03",
+    "category": "steuern",
+    "kategorie": "verwechselbar",
+    "scenario": "Offerte an Muster M AG",
+    "query": "Was kostet die Steuererklärung in der Offerte an die Muster M AG?",
+    "expected_answer": "CHF 640",
+    "expected_document": "offerte_14_buchhaltung_klein_anon",
+    "expected_chunk_ids": [
+      "offerte_14_buchhaltung_klein_anon_chunk_1"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "QUAL_01",
+    "category": "einschraenkung",
+    "kategorie": "qualitativ",
+    "scenario": "Offerte an Muster B AG",
+    "query": "What technical problem exists when integrating Topal data into Sage for Muster B AG?",
+    "expected_answer": "Integration of Topal data in Sage is not so easy to accomplish",
+    "expected_document": "offerte_02_accounting_intl_anon",
+    "expected_chunk_ids": [
+      "offerte_02_accounting_intl_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "QUAL_02",
+    "category": "anlass",
+    "kategorie": "qualitativ",
+    "scenario": "Offerte an Muster C Ltd.",
+    "query": "Since when has the accounting of Muster C Ltd. not been done?",
+    "expected_answer": "since November 2024 the accounting on SAP is not done",
+    "expected_document": "offerte_03_accounting_branch_anon",
+    "expected_chunk_ids": [
+      "offerte_03_accounting_branch_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "QUAL_03",
+    "category": "unabhaengigkeit",
+    "kategorie": "qualitativ",
+    "scenario": "Offerte an Muster E Foundation",
+    "query": "Why can Muster E Foundation not have both the audit and the accounting done by us?",
+    "expected_answer": "either the annual audit of the financial statements or the accounting can be carried out by us",
+    "expected_document": "offerte_05_stiftung_audit_anon",
+    "expected_chunk_ids": [
+      "offerte_05_stiftung_audit_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "QUAL_04",
+    "category": "leistung",
+    "kategorie": "qualitativ",
+    "scenario": "Offerte an M. Beispiel",
+    "query": "What telephone service is included with the official domicile address?",
+    "expected_answer": "we install your own telephone line",
+    "expected_document": "offerte_09_domizil_beratung_anon",
+    "expected_chunk_ids": [
+      "offerte_09_domizil_beratung_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "QUAL_05",
+    "category": "abgrenzung",
+    "kategorie": "qualitativ",
+    "scenario": "Offerte an Muster J Association",
+    "query": "Who prepares the ongoing accounting for Muster J Association?",
+    "expected_answer": "The accounting will be provided by a third party",
+    "expected_document": "offerte_11_swiss_finish_anon",
+    "expected_chunk_ids": [
+      "offerte_11_swiss_finish_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "QUAL_06",
+    "category": "anlass",
+    "kategorie": "qualitativ",
+    "scenario": "Offerte an Muster L Capital",
+    "query": "What corporate restructuring is planned for the client of Muster L Capital?",
+    "expected_answer": "tax-neutral split of the existing holding company",
+    "expected_document": "offerte_13_holding_spaltung_anon",
+    "expected_chunk_ids": [
+      "offerte_13_holding_spaltung_anon_chunk_0"
+    ],
+    "unanswerable": false
+  },
+  {
+    "case_id": "UNB_01",
+    "category": "unbeantwortbar",
+    "kategorie": "unbeantwortbar",
+    "scenario": "In keiner Offerte enthalten",
+    "query": "Was kostet die Verwaltung einer Liegenschaft pro Jahr?",
+    "expected_answer": "nicht in den Unterlagen",
+    "expected_document": null,
+    "expected_chunk_ids": [],
+    "unanswerable": true
+  },
+  {
+    "case_id": "UNB_02",
+    "category": "unbeantwortbar",
+    "kategorie": "unbeantwortbar",
+    "scenario": "In keiner Offerte enthalten",
+    "query": "Wie hoch ist der Stundenansatz für IT-Beratung und Systembetreuung?",
+    "expected_answer": "nicht in den Unterlagen",
+    "expected_document": null,
+    "expected_chunk_ids": [],
+    "unanswerable": true
+  },
+  {
+    "case_id": "UNB_03",
+    "category": "unbeantwortbar",
+    "kategorie": "unbeantwortbar",
+    "scenario": "In keiner Offerte enthalten",
+    "query": "Welche Kosten entstehen für die Durchführung einer Betreibung?",
+    "expected_answer": "nicht in den Unterlagen",
+    "expected_document": null,
+    "expected_chunk_ids": [],
+    "unanswerable": true
+  },
+  {
+    "case_id": "UNB_04",
+    "category": "unbeantwortbar",
+    "kategorie": "unbeantwortbar",
+    "scenario": "In keiner Offerte enthalten",
+    "query": "Was kostet die Erstellung eines Businessplans für eine Bankfinanzierung?",
+    "expected_answer": "nicht in den Unterlagen",
+    "expected_document": null,
+    "expected_chunk_ids": [],
+    "unanswerable": true
+  },
+  {
+    "case_id": "UNB_05",
+    "category": "unbeantwortbar",
+    "kategorie": "unbeantwortbar",
+    "scenario": "In keiner Offerte enthalten",
+    "query": "Wie hoch ist der Rabatt bei Vorauszahlung des Jahreshonorars?",
+    "expected_answer": "nicht in den Unterlagen",
+    "expected_document": null,
+    "expected_chunk_ids": [],
+    "unanswerable": true
+  }
+]
